@@ -172,7 +172,7 @@ public:
 
    static	void	Init_Logfile(void);
 	static	void	Write_To_File(LPCSTR str);
-	static	LPCSTR Logfile_Name(void) {return LOGFILE;}
+    static	char* Logfile_Name(void) {return DebugManager::LOGFILE;}
 
 	static	void	Enable_Memory_Logging( bool enable );
 
@@ -195,7 +195,7 @@ private:
 	static	bool	AllowCinematicKeys;
 
 	static	DebugDisplayHandlerClass * DisplayHandler;
-   static	LPSTR LOGFILE;
+   static	char* LOGFILE;
 	static	char	LogfileNameBuffer[256];
 	static	bool	IsSlave;
 

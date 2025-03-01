@@ -43,10 +43,10 @@
 #include "mono.h"
 #include "registry.h"
 #include <stdio.h>
-#include "wwaudio.h"
+#include "WWAudio.h"
 #include "combat.h"
 #include "wwmemlog.h"
-#include "fastallocator.h"
+#include "FastAllocator.h"
 
 #ifndef 	STEVES_NEW_CATCHER
 #define LOG_MEMORY 1		// enable this to turn on memory logging
@@ -226,7 +226,9 @@ void	DebugManager::Display( char const *buffer )
 	}
 
 	if ( EnabledDevices & DEBUG_DEVICE_WINDOWS ) {
-		OutputDebugString( buffer );		// puts it in the MSVC debug window
+#if WIN32
+        OutputDebugString( buffer );		// puts it in the MSVC debug window
+#endif
 	}
 }
 
@@ -468,7 +470,8 @@ void gsifree(void *ptr)
 }
 }
 
-
+// RM5248
+#if 0
 void * ::operator new (size_t size)
 {
 	void* memory=NULL;
@@ -496,6 +499,7 @@ void ::operator delete (void *ptr)
 	FastAllocatorGeneral::Get_Allocator()->Free(ptr);
 #endif
 }
+#endif
 
 #endif //STEVES_NEW_CATCHER
 #endif //PARAM_EDITING_ON
@@ -523,7 +527,9 @@ void ::operator delete (void *ptr)
 
 
 
-#include <imagehlp.h>
+//RM5248: stackwalk replace with boost.  do just enough to get it to compile.
+#define CONTEXT void
+//#include <imagehlp.h>
 
 
 #define WALK_FRAMES 8

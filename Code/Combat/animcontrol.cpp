@@ -164,7 +164,8 @@ void AnimChannelClass::Set_Animation( const char *name )
 {
 	// If this is our current anim, bail
 	if ( ( Animation != NULL ) && ( name != NULL ) ) {
-		if ( stricmp( Animation->Get_Name(), name ) == 0 ) {
+        // RM5248: stricmp
+        if ( strcmp( Animation->Get_Name(), name ) == 0 ) {
 			return;
 		}
 	}
@@ -401,7 +402,8 @@ void	BlendableAnimChannelClass::Set_Animation( const char *name, float blendtime
 	}
 
 	if ( ( NewChannel.Peek_Animation() != NULL ) && ( name != NULL ) ) {
-		if ( stricmp( NewChannel.Peek_Animation()->Get_Name(), name ) == 0 ) {
+        // RM5248: stricmp
+        if ( strcmp( NewChannel.Peek_Animation()->Get_Name(), name ) == 0 ) {
 			return;
 		}
 	}
@@ -760,13 +762,15 @@ void HumanAnimControlClass::Build_Skeleton_Anim_Name( StringClass& new_name, con
 	}
 
 	// If the anim doesn't start with "S_A_HUMAN.", add it
-	if ( ::strnicmp( name, "S_", 2 ) != 0 ) {
+    // RM5248: strnicmp
+    if ( ::strncmp( name, "S_", 2 ) != 0 ) {
 		new_name.Format( "S_%c_HUMAN.%s", Skeleton, name );
 	}
 
 	// If the anim name is "S_A_HUMAN.H_A_*", and the Skeleton is not 'A', use
 	// the other skeleton anim, if found
-	if ( new_name.Get_Length() > 14 && Skeleton != 'A' && ::strnicmp( new_name, "S_A_HUMAN.H_A_", 14 ) == 0 ) {
+    // RM5248: strnicmp
+    if ( new_name.Get_Length() > 14 && Skeleton != 'A' && ::strncmp( new_name, "S_A_HUMAN.H_A_", 14 ) == 0 ) {
 		StringClass	mod_name(new_name,true);
 		mod_name[2] = Skeleton;
 		mod_name[12] = Skeleton;

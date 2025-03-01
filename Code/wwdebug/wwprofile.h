@@ -94,7 +94,7 @@ protected:
 	const char *					Name;
 	int								TotalCalls;
 	float								TotalTime;
-	__int64							StartTime;
+    unsigned long long							StartTime;
 	int								RecursionCounter;
 
 	WWProfileHierachyNodeClass *	Parent;
@@ -190,7 +190,7 @@ private:
 	static	WWProfileHierachyNodeClass *	CurrentNode;
 	static	WWProfileHierachyNodeClass *	CurrentRootNode;
 	static	int									FrameCounter;
-	static	__int64								ResetTime;
+    static	unsigned long long								ResetTime;
 
 	friend	class		WWProfileInOrderIterator;
 };
@@ -234,7 +234,7 @@ public:
 	~WWTimeItClass( void );
 private:
 	const char * Name;
-	__int64	Time;
+    unsigned long long	Time;
 };
 
 #ifdef ENABLE_WWPROFILE
@@ -256,7 +256,7 @@ public:
 	~WWMeasureItClass( void );
 
 private:
-	__int64	Time;
+    unsigned long long	Time;
 	float *  PResult;
 };
 

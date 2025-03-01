@@ -47,8 +47,8 @@
 #include "scriptzone.h"
 #include "wwprofile.h"
 #include "combat.h"
-#include "wwaudio.h"
-#include "audiblesound.h"
+#include "WWAudio.h"
+#include "AudibleSound.h"
 #include "soldier.h"
 #include "playertype.h"
 //#include "building.h"
@@ -486,7 +486,8 @@ RefineryGameObj::CnC_Initialize (BaseControllerClass *base)
 		if (anim_phys_obj != NULL && anim_phys_obj->Peek_Model () != NULL) {
 
 			StringClass name = anim_phys_obj->Peek_Model ()->Get_Name ();
-			::strupr (name.Peek_Buffer ());
+            // RM5248: strupr
+//			::strupr (name.Peek_Buffer ());
 			if (::strstr (name, "REF_TIB_DUMP") != NULL) {
 
 				//

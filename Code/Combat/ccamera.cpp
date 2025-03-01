@@ -54,9 +54,9 @@
 #include "htree.h"
 #include "hanim.h"
 #include "hudinfo.h"
-#include "listener.h"
-#include "wwaudio.h"
-#include "soundscene.h"
+#include "Listener.h"
+#include "WWAudio.h"
+#include "SoundScene.h"
 #include "wwprofile.h"
 #include "diaglog.h"
 #include "gametype.h"
@@ -216,7 +216,8 @@ void CCameraProfileClass::Init( void )
 
 //			ProfileList.Add_Tail( profile );
 			// Convert to lower case
-			_strlwr(name.Peek_Buffer());
+            // RM5248: convert to lowercase
+//			_strlwr(name.Peek_Buffer());
 			ProfileHash.Insert(name,profile);
 		}
 
@@ -279,7 +280,8 @@ CCameraProfileClass	*	CCameraProfileClass::Find( const char * name )
 	char tmp[256];
 	strncpy(tmp,name,sizeof(tmp));
 	
-	_strlwr(tmp);
+    // RM5248: convert to lowercase
+//	_strlwr(tmp);
 	StringClass tmp_string(tmp,true);
 	CCameraProfileClass* profile = ProfileHash.Get(tmp_string);
 	return profile;
@@ -1277,7 +1279,8 @@ void	CCameraClass::Use_Profile( const char * name )
 {
 	if ( name ) {
 		// quick reject if the same
-		if ( CurrentProfile && !stricmp( CurrentProfileName, name ) ) {
+        // RM5248: stricmp
+        if ( CurrentProfile && !strcmp( CurrentProfileName, name ) ) {
 			return;
 		}
 

@@ -45,6 +45,8 @@
 #include "bittype.h"
 #include "vector.h"
 
+#define _stdcall
+
 
 /////////////////////////////////////////////////////////////////////////////////
 //	Forward declarations
@@ -202,10 +204,10 @@ template <class T> T
 AudioCallbackListClass<T>::Get_Callback (int index, uint32 *user_data)
 {
 	if (user_data != NULL) {
-		(*user_data) = Vector[index].user_data;
+        (*user_data) = this->Vector[index].user_data;
 	}
 
-	return Vector[index].callback_ptr;
+    return this->Vector[index].callback_ptr;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -214,9 +216,9 @@ AudioCallbackListClass<T>::Get_Callback (int index, uint32 *user_data)
 template <class T> void
 AudioCallbackListClass<T>::Remove_Callback (T pointer)
 {
-	for (int index = 0; index < ActiveCount; index ++) {
-		if (Vector[index].callback_ptr == pointer) {
-			Delete (index);
+    for (int index = 0; index < this->ActiveCount; index ++) {
+        if (this->Vector[index].callback_ptr == pointer) {
+            this->Delete (index);
 			break;
 		}
 	}

@@ -49,8 +49,8 @@
 #include "combatsound.h"
 #include "slnode.h"
 #include "scripts.h"
-#include "WWAudio.H"
-#include "Sound3D.H"
+#include "WWAudio.h"
+#include "Sound3D.h"
 #include "chunkio.h"
 #include "assets.h"
 #include "bullet.h"
@@ -576,7 +576,7 @@ void	WeaponClass::Do_Reload( void )
 
 float	WeaponClass::Get_Range( void )
 {
-	return ( PrimaryAmmoDefinition != NULL ) ? PrimaryAmmoDefinition->Range : 0;
+    return ( PrimaryAmmoDefinition != NULL ) ? (int)PrimaryAmmoDefinition->Range : 0;
 }
 
 

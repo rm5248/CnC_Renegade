@@ -274,8 +274,6 @@ private:
 	static bool			IsServer;
 };
 
-#endif	// __NETWORKOBJECT_H
-
 
 
 
@@ -335,6 +333,7 @@ inline BYTE NetworkObjectClass::Get_Client_Hint_Count_2(int client_id)
 }
 
 
+#endif	// __NETWORKOBJECT_H
 
 
 	//virtual void		Clear_Object_Dirty_Bits (int client_id);

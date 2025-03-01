@@ -51,7 +51,6 @@ that don't belong to them, etc...
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <new.h>
 #include <math.h>
 
 #include "wstypes.h"
@@ -78,7 +77,7 @@ class ArrayList
   bit8		   addSortedDes(IN T &node);		// Descending
   /*bit8		   addNumSortedAsc(IN T &node);		// Ascending
   bit8		   addNumSortedDes(IN T &node);		// Descending*/
-  bit8             addMany(OUT T *outarray, sint32 pos, sint32 howmany);
+  bit8             addMany(IN T *outarray, sint32 pos, sint32 howmany);
 
   // Remove a node
   bit8             remove(OUT T &node,sint32 pos);

@@ -374,7 +374,7 @@ WWINLINE TDBObjClass *
 TranslateDBClass::Find_Object (const char *id_desc)
 {
 	StringClass lower_case_name(id_desc,true);
-	_strlwr(lower_case_name.Peek_Buffer());
+//	_strlwr(lower_case_name.Peek_Buffer()); // RM5248: make the string lowercase(boost)
 	return m_ObjectHash.Get(lower_case_name);
 }
 

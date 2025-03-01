@@ -343,7 +343,7 @@ private:
 */
 #define READ_SAFE_MICRO_CHUNK(cload,id,var,type)								\
 	case (id):	{                                                     \
-		void *temp_read_buffer_on_the_stack = _alloca(sizeof(type));	\
+        void *temp_read_buffer_on_the_stack = alloca(sizeof(type));	\
 		cload.Read(temp_read_buffer_on_the_stack, sizeof(type));       \
 		var = *((type*)temp_read_buffer_on_the_stack);                 \
 		break;                                                         \
@@ -381,4 +381,4 @@ private:
 
 
 
-#endif CHUNKIO_H
+#endif /* CHUNKIO_H */

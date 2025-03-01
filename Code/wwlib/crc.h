@@ -54,6 +54,9 @@
 */
 class CRCEngine {
 	public:
+    static long rotl(long val, int bits){
+        return (val << bits) | (val >> (32 - bits));
+    }
 
 		// Constructor for CRC engine (it can have an override initial CRC value).
 		CRCEngine(long initial=0) : CRC(initial), Index(0) {
@@ -80,7 +83,7 @@ class CRCEngine {
 
 		long Value(void) const {
 			if (Buffer_Needs_Data()) {
-				return(_lrotl(CRC, 1) + StagingBuffer.Composite);
+                return(rotl(CRC, 1) + StagingBuffer.Composite);
 			}
 			return(CRC);
 		};

@@ -62,7 +62,7 @@
 #include "wwphysids.h"
 #include "hanim.h"
 #include "combat.h"
-#include "wwaudio.h"
+#include "WWAudio.h"
 #include "wwdebug.h"
 #include "wwhack.h"
 #include "wwprofile.h"
@@ -551,7 +551,8 @@ uint32 BuildingAggregateDefClass::Get_Class_ID(void) const
 
 bool BuildingAggregateDefClass::Is_Type(const char * type_name)
 {
-	if (stricmp(type_name,BuildingAggregateDefClass::Get_Type_Name()) == 0) {
+    // RM5248: stricmp
+    if (strcmp(type_name,BuildingAggregateDefClass::Get_Type_Name()) == 0) {
 		return true;
 	} else {
 		return StaticAnimPhysDefClass::Is_Type(type_name);

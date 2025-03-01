@@ -47,6 +47,8 @@
 #include "matrix3.h"
 #include "vector3.h"
 
+#define __cdecl
+
 
 class Quaternion
 {

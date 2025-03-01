@@ -179,6 +179,7 @@
 #pragma warning(disable : 4101)
 #endif
 
+#include <alloca.h>
 
 /*
 ** Enable this define to make the datasafe thread safe (there is a performance penalty).
@@ -1290,7 +1291,7 @@ DataSafeClass<T>::DataSafeClass(T*, int slopcount)
 		** when the datasafe is destructed. By using _alloca, and doing an in-place new, the memory that the object sits in
 		** will be freed when it goes out of scope but the destructor for 'T' won't be called.
 		*/
-		void *stackmem = _alloca(sizeof(T));
+        void *stackmem = alloca(sizeof(T));
 		T *slop_ptr = new (stackmem) T;
 		Add_Entry(*slop_ptr, true);
 	}
@@ -1384,11 +1385,14 @@ unsigned long DataSafeClass<T>::Get_Type_Code(void)
 	*/
 	static unsigned long instruction_pointer;
 	instruction_pointer = 0;
-	__asm {
-here:
-		lea	eax,here
-		mov	[instruction_pointer],eax
-	};
+    // RM5248 TODO: wtf is this asm doing??
+    // I think it's this...
+    instruction_pointer = (unsigned long)&instruction_pointer;
+//	__asm {
+//here:
+//		lea	eax,here
+//		mov	[instruction_pointer],eax
+//	};
 
 	ds_assert(instruction_pointer != 0);
 
@@ -1910,13 +1914,16 @@ SafeDataClass<T>::SafeDataClass(void)
 	** and it does much the same thing as just declaring 'T data'. It also has the benefit that the destructor won't be called
 	** for the slop object when we exit this function but the memory will be freed.
 	*/
-	void *stackmem = _alloca(sizeof(T));
-	T *data = new (stackmem) T;
+//    void *stackmem = alloca(sizeof(T));
+//    // placement new
+//    T *data = new(stackmem) T;
+    // RM5248: I think this is what the code is trying to do??
+    T data{};
 
 	/*
 	** Add the entry to the data safe and note the handle.
 	*/
-	Handle = DataSafeClass<T>::Add_Entry(*data);
+    Handle = DataSafeClass<T>::Add_Entry(data);
 #ifdef WWDEBUG
 	DebugData = *data;
 #endif //WWDEBUG

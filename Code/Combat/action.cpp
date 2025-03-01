@@ -38,7 +38,6 @@
 #include "input.h"
 #include "persistfactory.h"
 #include "combatchunkid.h"
-#include "path.h"
 #include "pathsolve.h"
 #include "pathmgr.h"
 #include "vehicledriver.h"
@@ -47,8 +46,8 @@
 #include "vehicle.h"
 #include "weapons.h"
 #include "movephys.h"
-#include "pathfind.h"
-#include "pathfindportal.h"
+#include "Pathfind.h"
+#include "PathfindPortal.h"
 #include "debug.h"
 #include "animcontrol.h"
 #include "conversationmgr.h"
@@ -73,7 +72,11 @@
 #include "gameobjmanager.h"
 
 #include "colmathaabox.h"
-#include "dinput.h"
+
+// RM5248 TODO: no direct input on linux, how to get keycode?
+//#include "dinput.h"
+#define DIK_LCONTROL 0
+#define DIK_LMENU 0
 
 int _ActionActCalls = 0;
 int _ActionCodeChanges = 0;

@@ -39,8 +39,6 @@
 #include "wwfile.h"
 #include "timemgr.h"
 
-#include <WTYPES.H>	// for SYSTEMTIME
-
 FileClass * _DiagLogFile = NULL;
 
 /*
@@ -66,20 +64,31 @@ void	DiagLogClass::Init( void )
 		_DiagLogFile = file;
 	}
 
-	SYSTEMTIME dt;
-	::GetSystemTime( &dt );
+//	SYSTEMTIME dt;
+//	::GetSystemTime( &dt );
+    // RM5248: use HowardHinnat date library to get current date/time.  For now, everything is 0.
+    int month = 0;
+    int day = 0;
+    int year = 0;
+    int hour = 0;
+    int minute = 0;
+    int second = 0;
 	StringClass dt_string;
-	dt_string.Format( "%02d/%02d/%02d %02d:%02d:%02d", dt.wMonth, dt.wDay, dt.wYear, dt.wHour, dt.wMinute, dt.wSecond );
+    dt_string.Format( "%02d/%02d/%02d %02d:%02d:%02d", month, day, year, hour, minute, second );
 	DIAG_LOG(( "OPEN", "%s", (const char *)dt_string ));
 }
 
 void	DiagLogClass::Shutdown( void )
 {
 	if ( _DiagLogFile != NULL ) {
-		SYSTEMTIME dt;
-		::GetSystemTime( &dt );
-		StringClass dt_string;
-		dt_string.Format( "%02d/%02d/%02d %02d:%02d:%02d", dt.wMonth, dt.wDay, dt.wYear, dt.wHour, dt.wMinute, dt.wSecond );
+        int month = 0;
+        int day = 0;
+        int year = 0;
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        StringClass dt_string;
+        dt_string.Format( "%02d/%02d/%02d %02d:%02d:%02d", month, day, year, hour, minute, second );
 		DIAG_LOG(( "CLOS", "%s", (const char *)dt_string ));
 
 		_DiagLogFile->Close();

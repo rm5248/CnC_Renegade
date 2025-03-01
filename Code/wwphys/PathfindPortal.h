@@ -45,8 +45,8 @@
 #include "refcount.h"
 #include "aabox.h"
 #include "wwdebug.h"
-#include "pathfind.h"
-#include "path.h"
+#include "Pathfind.h"
+#include "Path.h"
 #include "waypathposition.h"
 
 

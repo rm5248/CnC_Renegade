@@ -41,7 +41,11 @@
 #include <windows.h>
 #include "mmsys.h"
 
+#include <chrono>
+
 #define TIMEGETTIME SystemTime.Get
+
+#define __forceinline inline
 
 /*
 ** Class that just wraps around timeGetTime()
@@ -114,7 +118,9 @@ __forceinline unsigned long SysTimeClass::Get(void)
 		is_init = true;
 	}
 
-	unsigned long time = timeGetTime();
+//	unsigned long time = timeGetTime();
+    auto clock = std::chrono::high_resolution_clock::now();
+    unsigned long time = std::chrono::duration_cast<std::chrono::milliseconds>(clock.time_since_epoch()).count();
 	if (time > StartTime) {
 		return(time - StartTime);
 	}

@@ -41,7 +41,15 @@
 
 
 #define DIRECTINPUT_VERSION 0x0800
-#include <dinput.h>
+// RM5248: no dinput.h on linux
+//#include <dinput.h>
+#define LPDIRECTINPUT void*
+#define LPDIRECTINPUTDEVICE void*
+#define LPDIRECTINPUTDEVICE2 void*
+#define DIJOYSTATE int
+#define PASCAL
+#define LPCDIDEVICEINSTANCE void*
+#define LPUNKNOWN void*
 
 /*
 **
@@ -97,6 +105,8 @@ void DirectInput::Init( void )
 {
 	WWDEBUG_SAY(("DirectInput: Init\n"));
 
+// RM5248: disable direct input
+#if 0
 	HRESULT        hr;
 
 	WWASSERT(DirectInputLibrary == NULL);
@@ -273,6 +283,7 @@ void DirectInput::Init( void )
 	}
 
 	return ;
+#endif
 }
 
 /*
@@ -281,7 +292,8 @@ void DirectInput::Init( void )
 void DirectInput::Shutdown( void )
 {
 	WWDEBUG_SAY(("DirectInput: Shutdown\n"));
-
+    // RM5248: disable directinput
+#if 0
 	if ( DIKeyboardDevice ) {
 		DIKeyboardDevice->Unacquire();
 		DIKeyboardDevice->Release();
@@ -307,6 +319,7 @@ void DirectInput::Shutdown( void )
 			FreeLibrary((HINSTANCE)DirectInputLibrary);
 		}
 	}
+#endif
 }
 
 /*
@@ -328,6 +341,8 @@ void DirectInput::Acquire(void)
 {
 //	WWDEBUG_SAY(("DirectInput: Acquire\n"));
 
+    // RM5248
+#if 0
 	if (Captured == false) {
 		Flush();
 
@@ -348,6 +363,7 @@ void DirectInput::Acquire(void)
 
 		Captured = true;
 	}
+#endif
 }
 
 
@@ -358,6 +374,8 @@ void DirectInput::Unacquire(void)
 {
 //	WWDEBUG_SAY(("DirectInput: Unacquire\n"));
 
+// RM5248
+#if 0
 	if (Captured) {
 		if (DIMouseDevice) {
 			DIMouseDevice->Unacquire();
@@ -375,6 +393,7 @@ void DirectInput::Unacquire(void)
 
 		Captured = false;
 	}
+#endif
 }
 
 
@@ -383,6 +402,8 @@ void DirectInput::Unacquire(void)
 */
 int PASCAL InitJoystick(LPCDIDEVICEINSTANCE pdinst, LPVOID pvRef)
 {
+    // RM5248
+#if 0
    LPDIRECTINPUT pdi = (LPDIRECTINPUT)pvRef;
 
 	if ( DIJoystickDevice == NULL ) {
@@ -404,6 +425,7 @@ int PASCAL InitJoystick(LPCDIDEVICEINSTANCE pdinst, LPVOID pvRef)
 	}
 
 	return DIENUM_CONTINUE;
+#endif
 }
 
 
@@ -412,6 +434,8 @@ int PASCAL InitJoystick(LPCDIDEVICEINSTANCE pdinst, LPVOID pvRef)
 */
 void DirectInput::ReadKeyboard( void )
 {
+    // RM5248
+#if 0
 	if ( DIKeyboardDevice == NULL ) return;
 
 	for (int i = 0; i < sizeof( DIKeyboardButtons ); i++ ) {
@@ -508,6 +532,7 @@ retry_keyboard:
 	DIKeyboardState[ DIK_ALT ]			= DIKeyboardState[ DIK_LALT ]			| DIKeyboardState[ DIK_RALT ];
 	DIKeyboardState[ DIK_WIN ]			= DIKeyboardState[ DIK_LWIN ]			| DIKeyboardState[ DIK_RWIN ];
 #endif
+#endif
 }
 
 
@@ -516,6 +541,8 @@ retry_keyboard:
 */
 void DirectInput::ReadMouse( void )
 {
+    // RM5248
+#if 0
 	if ( DIMouseDevice == NULL ) return;
 
 	for (int i = 0; i < sizeof( DIMouseButtons ); i++ ) {
@@ -631,6 +658,7 @@ retry_mouse:
 	DIMouseButtons[ 1 ]	= Button_State_Table[ ((DIMouseButtons[ 1 ]&1) << 1) + ((DIMouseState.rgbButtons[ 1 ] & 0x80 )?1:0) ];
 	DIMouseButtons[ 2 ]	= Button_State_Table[ ((DIMouseButtons[ 2 ]&1) << 1) + ((DIMouseState.rgbButtons[ 2 ] & 0x80 )?1:0) ];
 #endif
+#endif
 }
 
 
@@ -639,6 +667,8 @@ retry_mouse:
 */
 void DirectInput::ReadJoystick( void )
 {
+    // RM5248
+#if 0
 	if ( DIJoystickDevice == NULL ) return;
 
     // poll the joystick to read the current state
@@ -673,7 +703,7 @@ retry_joystick:
 
 	DIJoystickButtons[ 0 ]	= Button_State_Table[ ((DIJoystickButtons[ 0 ]&1) << 1) + ((DIJoystickState.rgbButtons[ 0 ] & 0x80 )?1:0) ];
 	DIJoystickButtons[ 1 ]	= Button_State_Table[ ((DIJoystickButtons[ 1 ]&1) << 1) + ((DIJoystickState.rgbButtons[ 1 ] & 0x80 )?1:0) ];
-
+#endif
 }
 
 
@@ -714,7 +744,9 @@ void DirectInput::Eat_Mouse_Held_States (void)
 */
 long	DirectInput::Get_Joystick_Axis_State( JoystickAxis axis )
 {
-	return ((long*)&DIJoystickState.lX)[axis];
+    // RM5248
+    return 0;
+//	return ((long*)&DIJoystickState.lX)[axis];
 }
 
 

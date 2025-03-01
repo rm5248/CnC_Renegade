@@ -25,19 +25,19 @@
 static MsgManager         *msg_manager=NULL;
 
 static int                debug_enabled=0;
-static ostream           *debug_ostream=NULL;
+static std::ostream           *debug_ostream=NULL;
 static Streamer           debug_streamer;
 
 static int                info_enabled=0;
-static ostream           *info_ostream=NULL;
+static std::ostream           *info_ostream=NULL;
 static Streamer           info_streamer;
 
 static int                warn_enabled=0;
-static ostream           *warn_ostream=NULL;
+static std::ostream           *warn_ostream=NULL;
 static Streamer           warn_streamer;
 
 static int                error_enabled=0;
-static ostream           *error_ostream=NULL;  
+static std::ostream           *error_ostream=NULL;
 static Streamer           error_streamer;
 
 

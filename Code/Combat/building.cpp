@@ -41,9 +41,9 @@
 #include "wwphysids.h"
 #include "meshmdl.h"
 #include "gameobjmanager.h"
-#include "wwaudio.h"
-#include "audiblesound.h"
-#include "sound3d.h"
+#include "WWAudio.h"
+#include "AudibleSound.h"
+#include "Sound3D.h"
 #include "translateobj.h"
 #include "translatedb.h"
 #include "combat.h"
@@ -677,12 +677,13 @@ BuildingGameObj::Name_Prefix_Matches_This_Building (const char * name)
 
 	if (name != NULL) {
 		StringClass prefex(Get_Definition().MeshPrefix,true);
-		char * meshname = strchr(name,'.');
+        // RM5248: strnicmp, strchr
+        char * meshname = strchr((char*)name,'.');
 		if (meshname != NULL) {
 			meshname++;
-			retval = (strnicmp(meshname,prefex,strlen(prefex)) == 0);
+            retval = (strncmp(meshname,prefex,strlen(prefex)) == 0);
 		} else {
-			retval = (strnicmp(name,prefex,strlen(prefex)) == 0);
+            retval = (strncmp(name,prefex,strlen(prefex)) == 0);
 		}
 	}
 
@@ -1580,7 +1581,7 @@ BuildingGameObj::Find_Closest_Poly_For_Model
 			//	Check each polygon to see which is the closest
 			//
 			int poly_count = mesh_model->Get_Polygon_Count ();
-			for (index = 0; index < poly_count; index ++) {
+            for (int index = 0; index < poly_count; index ++) {
 				
 				int vert1 = tri_array[index][0];
 				int vert2 = tri_array[index][1];

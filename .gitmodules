@@ -1,0 +1,3 @@
+[submodule "Code/mingw-directx-headers"]
+	path = Code/mingw-directx-headers
+	url = git@github.com:misyltoad/mingw-directx-headers.git

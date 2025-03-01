@@ -114,7 +114,8 @@ void ScriptManager::Shutdown(void)
 	}
 
 	if (hDLL != NULL) {
-		FreeLibrary(hDLL);
+        // RM52548: DLL
+//		FreeLibrary(hDLL);
 		hDLL = NULL;
 	}
 }
@@ -199,7 +200,9 @@ void ScriptManager::Load_Scripts(const char* dll_filename)
 	}
 #endif
 
-	hDLL = LoadLibrary(dll_filename);
+    // RM5248: DLL
+#if 0
+    hDLL = LoadLibrary(dll_filename);
 
 	if (hDLL == NULL) {
 		Debug_Say(("Cound not load DLL file %s\n", dll_filename));
@@ -255,6 +258,7 @@ void ScriptManager::Load_Scripts(const char* dll_filename)
 			Debug_Say(("Cound not find Set_Script_Commands\n"));
 		}
 	}
+#endif
 }
 
 

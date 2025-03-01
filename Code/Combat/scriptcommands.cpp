@@ -45,7 +45,7 @@
 #include "objlibrary.h"
 #include "phys.h"
 #include "ccamera.h"
-#include "sound3d.h"
+#include "Sound3D.h"
 #include "combat.h"
 #include "radar.h"
 #include "explosion.h"
@@ -62,7 +62,7 @@
 #include "translatedb.h"
 #include "vehicle.h"
 #include "combatchunkid.h"
-#include "logicalsound.h"
+#include "LogicalSound.h"
 #include "soldierobserver.h"
 #include "cinematicgameobj.h"
 #include "dynamicanimphys.h"
@@ -77,7 +77,7 @@
 #include "scriptzone.h"
 #include "hud.h"
 #include "backgroundmgr.h"
-#include "weathermgr.h"
+#include "WeatherMgr.h"
 #include "mapmgr.h"
 #include "heightdb.h"
 #include "weaponbag.h"
@@ -717,7 +717,8 @@ GameObject *Find_Random_Simple_Object ( const char *preset_name )
 				//
 				//	Is this one of the objects we can choose from?
 				//
-				if ( ::stricmp ( simple_obj->Get_Definition ().Get_Name (), preset_name ) == 0 ) {
+                // RM5248: stricmp
+                if ( ::strcmp ( simple_obj->Get_Definition ().Get_Name (), preset_name ) == 0 ) {
 					obj_list.Add (simple_obj);
 				}
 			}
@@ -2917,7 +2918,8 @@ GameObject * Find_Nearest_Building_To_Pos( const Vector3 & position, const char 
 			//	Is this the type of building we're looking for?
 			//
 			const char *name_prefix = building->Get_Name_Prefix();
-			if (::lstrcmpi( mesh_prefix, name_prefix ) == 0) {
+            // RM5248: lstrcmpi
+            if (::strcmp( mesh_prefix, name_prefix ) == 0) {
 
 				//
 				//	Is this the closest building we've found yet?

@@ -80,6 +80,7 @@ private:
 	static bool TextureLoadSuspended;
 };
 
+class TextureLoadTaskListClass;
 class TextureLoadTaskListNodeClass
 {
 	friend class TextureLoadTaskListClass;

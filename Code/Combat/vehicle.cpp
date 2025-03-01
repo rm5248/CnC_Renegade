@@ -51,8 +51,8 @@
 #include "wwpacket.h"
 #include "gameobjmanager.h"
 #include <stdio.h>
-#include "WWAudio.H"
-#include "Sound3D.H"
+#include "WWAudio.h"
+#include "Sound3D.h"
 #include "vehiclephys.h"
 #include "motorcycle.h"
 #include "trackedvehicle.h"
@@ -2263,19 +2263,22 @@ void	VehicleGameObj::Update_Damage_Meshes( void )
 			for (	int index = 0; index < bone_count; index ++) {
 				const char *bone_name = model->Get_Bone_Name( index );
 
-				if ( ::strnicmp( bone_name, DAMAGE25_BONE_NAME, DAMAGE25_BONE_NAME_LEN ) == 0 ) {
+                // RM5248: strnicmp
+                if ( ::strncmp( bone_name, DAMAGE25_BONE_NAME, DAMAGE25_BONE_NAME_LEN ) == 0 ) {
 
 					//
 					//	Show/hide the subobjects associated with 25% damage
 					//
 					::Set_Subobject_Visibility( model, index, show_damage25 );
-				} else if ( ::strnicmp( bone_name, DAMAGE50_BONE_NAME, DAMAGE50_BONE_NAME_LEN ) == 0 ) {
+                    // RM5248: strnicmp
+                } else if ( ::strncmp( bone_name, DAMAGE50_BONE_NAME, DAMAGE50_BONE_NAME_LEN ) == 0 ) {
 
 					//
 					//	Show/hide the subobjects associated with 50% damage
 					//
 					::Set_Subobject_Visibility( model, index, show_damage50 );
-				} else if ( ::strnicmp( bone_name, DAMAGE75_BONE_NAME, DAMAGE75_BONE_NAME_LEN ) == 0 ) {
+                    // RM5248: strnicmp
+                } else if ( ::strncmp( bone_name, DAMAGE75_BONE_NAME, DAMAGE75_BONE_NAME_LEN ) == 0 ) {
 
 					//
 					//	Show/hide the subobjects associated with 75% damage

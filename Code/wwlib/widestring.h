@@ -304,7 +304,8 @@ inline int
 WideStringClass::Compare_No_Case (const WCHAR *string) const
 {
 	if (string) {
-		return _wcsicmp (m_Buffer, string);
+        return wcscmp (m_Buffer, string);
+//		return _wcsicmp (m_Buffer, string); // TODO case-insensitive needed
 	}
 
 	return -1;

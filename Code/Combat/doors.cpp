@@ -45,7 +45,7 @@
 #include "smartgameobj.h"
 #include "gameobjmanager.h"
 #include "soldier.h"
-#include "wwaudio.h"
+#include "WWAudio.h"
 #include "wwprofile.h"
 #include "bitpackids.h"
 #include "diaglog.h"
@@ -89,7 +89,8 @@ uint32	DoorPhysDefClass::Get_Class_ID (void) const
 
 bool DoorPhysDefClass::Is_Type(const char * type_name)
 {
-	if (stricmp(type_name,DoorPhysDefClass::Get_Type_Name()) == 0) {
+    // RM5248: stricmp
+    if (strcmp(type_name,DoorPhysDefClass::Get_Type_Name()) == 0) {
 		return true;
 	} else {
 		return AccessiblePhysDefClass::Is_Type(type_name);

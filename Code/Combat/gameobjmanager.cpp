@@ -536,7 +536,8 @@ void	GameObjManager::Update_Building_Collection_Spheres( void )
 				//	Is this a building with the same prefix?
 				//
 				if (	test_obj != NULL && test_obj != obj &&
-						::stricmp (test_obj->Get_Name_Prefix (), prefix) == 0)
+                        // RM5248: stricmp
+                        ::strcmp (test_obj->Get_Name_Prefix (), prefix) == 0)
 				{
 					//
 					//	Get the test object's position

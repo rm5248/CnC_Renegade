@@ -235,7 +235,8 @@ inline int MaterialInfoClass::Add_Vertex_Material(VertexMaterialClass * vmat)
 inline int MaterialInfoClass::Get_Vertex_Material_Index(const char * name)
 {
 	for (int i=0; i<VertexMaterials.Count(); i++) {
-		if (stricmp(name,VertexMaterials[i]->Get_Name()) == 0) {
+        // RM5248: stricmp
+        if (strcmp(name,VertexMaterials[i]->Get_Name()) == 0) {
 			return i;
 		}
 	}

@@ -567,6 +567,8 @@ WWINLINE void* FastAllocatorGeneral::Realloc(void* pAlloc, unsigned int n){
    template <class T>
    class FastSTLAllocator{
    public:
+       // RM5248: added allocator here
+       FastAllocatorGeneral generalAllocator;
      typedef size_t     size_type;
      typedef ptrdiff_t  difference_type;
      typedef T*         pointer;

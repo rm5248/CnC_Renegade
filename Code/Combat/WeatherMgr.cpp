@@ -35,10 +35,10 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 // Includes.
-#include "weathermgr.h"
+#include "WeatherMgr.h"
 #include "apppackettypes.h"
 #include "assetmgr.h"
-#include "audiblesound.h"
+#include "AudibleSound.h"
 #include "camera.h"
 #include "chunkio.h"
 #include "combat.h"
@@ -53,8 +53,8 @@
 #include "rinfo.h"
 #include "scene.h"
 #include "sortingrenderer.h"
-#include "soundenvironment.h"
-#include "wwaudio.h"
+#include "SoundEnvironment.h"
+#include "WWAudio.h"
 #include "wwmemlog.h"
 
 
@@ -63,8 +63,14 @@ WeatherMgrClass _TheWeatherMgr;
 
 
 // Static data.
-DEFINE_AUTO_POOL(WeatherSystemClass::RayStruct, WeatherSystemClass::GROWTH_STEP);
-DEFINE_AUTO_POOL(WeatherSystemClass::ParticleStruct, WeatherSystemClass::GROWTH_STEP);
+
+// RM5248: updated the DEFINE for the auto pool
+template<>
+ObjectPoolClass<WeatherSystemClass::RayStruct,WeatherSystemClass::GROWTH_STEP> AutoPoolClass<WeatherSystemClass::RayStruct,WeatherSystemClass::GROWTH_STEP>::Allocator;
+template<>
+ObjectPoolClass<WeatherSystemClass::ParticleStruct,WeatherSystemClass::GROWTH_STEP> AutoPoolClass<WeatherSystemClass::ParticleStruct,WeatherSystemClass::GROWTH_STEP>::Allocator;
+//DEFINE_AUTO_POOL(WeatherSystemClass::RayStruct, WeatherSystemClass::GROWTH_STEP);
+//DEFINE_AUTO_POOL(WeatherSystemClass::ParticleStruct, WeatherSystemClass::GROWTH_STEP);
 
 Random2Class									 WeatherSystemClass::_RandomNumber (0x60486223);
 unsigned											 WeatherSystemClass::_GlobalParticleCount = 0;
@@ -2122,12 +2128,12 @@ void WeatherMgrClass::Update (PhysicsSceneClass *scene, CameraClass *camera)
  *   03/02/01    IML : Created.                                                                *
  *=============================================================================================*/
  #define WRITE_PARAMETER(varname) \
-WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _CURRENT_VALUE, _Parameters [PARAMETER_ ## varname ##].CurrentValue); \
-WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _NORMAL_VALUE, _Parameters [PARAMETER_ ## varname ##].NormalValue);	\
-WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _NORMAL_TARGET, _Parameters [PARAMETER_ ## varname ##].NormalTarget);	\
-WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _NORMAL_DURATION, _Parameters [PARAMETER_ ## varname ##].NormalDuration);	\
-WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _OVERRIDE_TARGET, _Parameters [PARAMETER_ ## varname ##].OverrideTarget);	\
-WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _OVERRIDE_DURATION, _Parameters [PARAMETER_ ## varname ##].OverrideDuration)
+WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _CURRENT_VALUE, _Parameters [PARAMETER_ ## varname ].CurrentValue); \
+WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _NORMAL_VALUE, _Parameters [PARAMETER_ ## varname ].NormalValue);	\
+WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _NORMAL_TARGET, _Parameters [PARAMETER_ ## varname ].NormalTarget);	\
+WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _NORMAL_DURATION, _Parameters [PARAMETER_ ## varname ].NormalDuration);	\
+WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _OVERRIDE_TARGET, _Parameters [PARAMETER_ ## varname ].OverrideTarget);	\
+WRITE_MICRO_CHUNK (csave, VARID_ ## varname ## _OVERRIDE_DURATION, _Parameters [PARAMETER_ ## varname ].OverrideDuration)
 
 bool WeatherMgrClass::Save (ChunkSaveClass &csave)
 {
@@ -2218,12 +2224,12 @@ bool WeatherMgrClass::Load (ChunkLoadClass &cload)
  *   03/02/01    IML : Created.                                                                *
  *=============================================================================================*/
 #define READ_PARAMETER(varname) \
-READ_MICRO_CHUNK (cload, VARID_ ## varname ## _CURRENT_VALUE, _Parameters [PARAMETER_ ## varname ##].CurrentValue); \
-READ_MICRO_CHUNK (cload, VARID_ ## varname ## _NORMAL_VALUE, _Parameters [PARAMETER_ ## varname ##].NormalValue);	\
-READ_MICRO_CHUNK (cload, VARID_ ## varname ## _NORMAL_TARGET, _Parameters [PARAMETER_ ## varname ##].NormalTarget);	\
-READ_MICRO_CHUNK (cload, VARID_ ## varname ## _NORMAL_DURATION, _Parameters [PARAMETER_ ## varname ##].NormalDuration);	\
-READ_MICRO_CHUNK (cload, VARID_ ## varname ## _OVERRIDE_TARGET, _Parameters [PARAMETER_ ## varname ##].OverrideTarget);	\
-READ_MICRO_CHUNK (cload, VARID_ ## varname ## _OVERRIDE_DURATION, _Parameters [PARAMETER_ ## varname ##].OverrideDuration)
+READ_MICRO_CHUNK (cload, VARID_ ## varname ## _CURRENT_VALUE, _Parameters [PARAMETER_ ## varname ].CurrentValue); \
+READ_MICRO_CHUNK (cload, VARID_ ## varname ## _NORMAL_VALUE, _Parameters [PARAMETER_ ## varname ].NormalValue);	\
+READ_MICRO_CHUNK (cload, VARID_ ## varname ## _NORMAL_TARGET, _Parameters [PARAMETER_ ## varname ].NormalTarget);	\
+READ_MICRO_CHUNK (cload, VARID_ ## varname ## _NORMAL_DURATION, _Parameters [PARAMETER_ ## varname ].NormalDuration);	\
+READ_MICRO_CHUNK (cload, VARID_ ## varname ## _OVERRIDE_TARGET, _Parameters [PARAMETER_ ## varname ].OverrideTarget);	\
+READ_MICRO_CHUNK (cload, VARID_ ## varname ## _OVERRIDE_DURATION, _Parameters [PARAMETER_ ## varname ].OverrideDuration)
 
 bool WeatherMgrClass::Load_Micro_Chunks (ChunkLoadClass &cload)
 {
@@ -2316,10 +2322,10 @@ bool WeatherMgrClass::Load_Dynamic_Micro_Chunks (ChunkLoadClass &cload)
  *   03/02/01    IML : Created.                                                                *
  *=============================================================================================*/
 #define EXPORT_PARAMETER(object, varname) \
-object.Add (_Parameters [PARAMETER_ ## varname ##].NormalTarget); \
-object.Add (_Parameters [PARAMETER_ ## varname ##].NormalDuration); \
-object.Add (_Parameters [PARAMETER_ ## varname ##].OverrideTarget); \
-object.Add (_Parameters [PARAMETER_ ## varname ##].OverrideDuration)
+object.Add (_Parameters [PARAMETER_ ## varname ].NormalTarget); \
+object.Add (_Parameters [PARAMETER_ ## varname ].NormalDuration); \
+object.Add (_Parameters [PARAMETER_ ## varname ].OverrideTarget); \
+object.Add (_Parameters [PARAMETER_ ## varname ].OverrideDuration)
 
 void WeatherMgrClass::Export_Rare (BitStreamClass &packet)
 {
@@ -2349,10 +2355,10 @@ void WeatherMgrClass::Export_Rare (BitStreamClass &packet)
  *   03/02/01    IML : Created.                                                                *
  *=============================================================================================*/
 #define IMPORT_PARAMETER(object, varname) \
-object.Get (_Parameters [PARAMETER_ ## varname ##].NormalTarget); \
-object.Get (_Parameters [PARAMETER_ ## varname ##].NormalDuration); \
-object.Get (_Parameters [PARAMETER_ ## varname ##].OverrideTarget); \
-object.Get (_Parameters [PARAMETER_ ## varname ##].OverrideDuration)
+object.Get (_Parameters [PARAMETER_ ## varname ].NormalTarget); \
+object.Get (_Parameters [PARAMETER_ ## varname ].NormalDuration); \
+object.Get (_Parameters [PARAMETER_ ## varname ].OverrideTarget); \
+object.Get (_Parameters [PARAMETER_ ## varname ].OverrideDuration)
 
 void WeatherMgrClass::Import_Rare (BitStreamClass &packet)
 {

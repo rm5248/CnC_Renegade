@@ -48,7 +48,7 @@
 #include "decophys.h"
 #include "assets.h"
 #include "gameobjmanager.h"
-#include "wwaudio.h"
+#include "WWAudio.h"
 #include "wwprofile.h"
 #include "projectile.h"
 #include "wwphysids.h"
@@ -734,7 +734,8 @@ void	C4GameObj::Export_Rare( BitStreamClass &packet )
 		bool stuck_static_anim = (StuckStaticAnimObj != NULL);
 		packet.Add(stuck_static_anim);
 		if (stuck_static_anim) {
-			packet.Add(StuckStaticAnimObj->Get_ID());
+            // RM5248: add
+            packet.Add((UINT)StuckStaticAnimObj->Get_ID());
 		}
 	}
 }
@@ -810,7 +811,7 @@ void	C4GameObj::Import_Rare( BitStreamClass &packet )
 		packet.Get(stuck_static_anim);
 		if (stuck_static_anim) {
 			
-			uint32 static_anim_obj_id = 0;
+            UINT static_anim_obj_id = 0;
 			packet.Get(static_anim_obj_id);
 
 			if (static_anim_obj_id != 0xFFFFFFFF) {

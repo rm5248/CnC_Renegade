@@ -47,8 +47,8 @@
 #include "gameobjmanager.h"
 #include "soldier.h"
 #include "wwprofile.h"
-#include "audiblesound.h"
-#include "wwaudio.h"
+#include "AudibleSound.h"
+#include "WWAudio.h"
 #include "bitpackids.h"
 
 
@@ -124,7 +124,8 @@ uint32	ElevatorPhysDefClass::Get_Class_ID (void) const
 
 bool ElevatorPhysDefClass::Is_Type(const char * type_name)
 {
-	if (stricmp(type_name,ElevatorPhysDefClass::Get_Type_Name()) == 0) {
+    // RM5248: stricmp
+    if (strcmp(type_name,ElevatorPhysDefClass::Get_Type_Name()) == 0) {
 		return true;
 	} else {
 		return AccessiblePhysDefClass::Is_Type(type_name);

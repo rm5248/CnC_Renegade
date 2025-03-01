@@ -93,7 +93,7 @@ MapMgrClass::Get_Map_Texture_Filename (StringClass &filename)
 	//	Strip off the path if necessary
 	//
 	filename = MapTextureName;
-	char *dir_delimiter			= ::strrchr (MapTextureName, '\\');
+    char *dir_delimiter			= ::strrchr (MapTextureName.Peek_Buffer(), '\\');
 	if (dir_delimiter != NULL) {
 		filename = (dir_delimiter + 1);
 	}
@@ -114,7 +114,10 @@ MapMgrClass::Set_Map_Texture (const char *filename)
 	//	Strip off the path if necessary
 	//
 	StringClass filename_only	= filename;
-	char *dir_delimiter			= ::strrchr (filename, '\\');
+    // RM5248: this is probably not cross-platform(checking for '\' char)
+    char filename_dup[1024];
+    strncpy(filename_dup, filename, sizeof(filename_dup));
+    char *dir_delimiter			= ::strrchr (filename_dup, '\\');
 	if (dir_delimiter != NULL) {
 		filename_only = (dir_delimiter + 1);
 	}

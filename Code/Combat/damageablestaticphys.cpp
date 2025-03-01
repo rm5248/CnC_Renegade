@@ -137,7 +137,8 @@ uint32 DamageableStaticPhysDefClass::Get_Class_ID(void) const
 
 bool DamageableStaticPhysDefClass::Is_Type(const char * type_name)
 {
-	if (stricmp(type_name,DamageableStaticPhysDefClass::Get_Type_Name()) == 0) {
+    // RM5248: stricmp
+    if (strcmp(type_name,DamageableStaticPhysDefClass::Get_Type_Name()) == 0) {
 		return true;
 	} else {
 		return StaticAnimPhysDefClass::Is_Type(type_name);

@@ -50,9 +50,121 @@
 #include "combat.h"
 #include "ccamera.h"
 
+// RM5248: why isn't this variable seen?
+extern bool GameInFocus;
 
 #define DIRECTINPUT_VERSION 0x0800
-#include <dinput.h>
+// RM5248: need to purge directinput for linux support
+//#include <dinput.h>
+#ifndef WIN32
+# define DIK_F1 0
+# define DIK_F2 1
+# define DIK_F3 2
+# define DIK_F4 3
+# define DIK_F5 4
+# define DIK_F6 5
+# define DIK_F7 6
+# define DIK_F8 7
+# define DIK_F9 8
+# define DIK_F10 9
+# define DIK_F11 10
+# define DIK_F12 11
+# define DIK_0 12
+# define DIK_1 13
+# define DIK_2 14
+# define DIK_3 15
+# define DIK_4 16
+# define DIK_5 17
+# define DIK_6 18
+# define DIK_7 19
+# define DIK_8 20
+# define DIK_9 21
+# define DIK_A 22
+# define DIK_B 23
+# define DIK_C 24
+# define DIK_D 25
+# define DIK_E 26
+# define DIK_F 27
+# define DIK_G 28
+# define DIK_H 29
+# define DIK_I 30
+# define DIK_J 31
+# define DIK_K 32
+# define DIK_L 33
+# define DIK_M 34
+# define DIK_N 35
+# define DIK_O 36
+# define DIK_P 37
+# define DIK_Q 38
+# define DIK_R 39
+# define DIK_S 40
+# define DIK_T 41
+# define DIK_U 42
+# define DIK_V 43
+# define DIK_W 44
+# define DIK_X 45
+# define DIK_Y 46
+# define DIK_Z 47
+# define DIK_MINUS 48
+# define DIK_EQUALS	49
+# define DIK_BACK		50
+# define DIK_TAB	51
+# define DIK_LBRACKET 52
+# define DIK_RBRACKET	53
+# define DIK_RETURN 54
+# define DIK_SEMICOLON 55
+# define DIK_APOSTROPHE 56
+# define DIK_GRAVE 57
+# define DIK_BACKSLASH	58
+# define DIK_COMMA		59
+# define DIK_PERIOD	60
+# define DIK_SLASH		61
+# define DIK_SPACE	 62
+# define DIK_CAPITAL	63
+# define DIK_NUMLOCK	64
+# define DIK_SCROLL	65
+# define DIK_ESCAPE	66
+# define DIK_NUMPAD0	67
+# define DIK_NUMPAD1	68
+# define DIK_NUMPAD2	69
+# define DIK_NUMPAD3	70
+# define DIK_NUMPAD4	71
+# define DIK_NUMPAD5	72
+# define DIK_NUMPAD6	73
+# define DIK_NUMPAD7	74
+# define DIK_NUMPAD8	75
+# define DIK_NUMPAD9	76
+# define DIK_SUBTRACT	77
+# define DIK_MULTIPLY	78
+# define DIK_ADD	79
+# define DIK_DECIMAL	80
+# define DIK_NUMPADENTER 81
+# define DIK_DIVIDE	82
+# define DIK_HOME		83
+# define DIK_PRIOR		84
+# define DIK_END		85
+# define DIK_NEXT	86
+# define DIK_INSERT	87
+# define DIK_DELETE	88
+# define DIK_UP		89
+# define DIK_DOWN		90
+# define DIK_LEFT		91
+# define DIK_RIGHT		92
+# define DIK_SYSRQ	93
+# define DIK_CONTROL	94
+# define DIK_LCONTROL	95
+# define DIK_RCONTROL	96
+# define DIK_SHIFT	97
+# define DIK_LSHIFT	98
+# define DIK_RSHIFT	99
+# define DIK_ALT	100
+# define DIK_LALT	101
+# define DIK_RALT	102
+# define DIK_WIN	103
+# define DIK_LWIN	104
+# define DIK_RWIN		105
+# define DIK_APPS	106
+#endif
 
 #include <stdio.h>
 
@@ -112,7 +224,7 @@ const char *DEFAULT_INPUT_FILENAME = "DEFAULT_INPUT.CFG";
 
 typedef struct {
 	short	ID;
-	char	*Name;
+    const char	*Name;
 } StringID;
 
 StringID	ButtonNames[] = {
@@ -910,7 +1022,7 @@ void	Input::Update( void )
 			//
 			//	Loop over and zero out any function that uses either of these primary keys
 			//
-			for (index = 0; index < INPUT_FUNCTION_COUNT; index ++) {
+            for (int index = 0; index < INPUT_FUNCTION_COUNT; index ++) {
 
 				//
 				//	Does this function use one of the keys that is mapped to the zoom functions?
@@ -938,7 +1050,7 @@ void	Input::Update( void )
 		//
 		// Apply accelerated keys
 		//
-		for (index = 0; index < AcceleratedKeyList.Count (); index ++) {
+        for (int index = 0; index < AcceleratedKeyList.Count (); index ++) {
 			AcceleratedKeyDef &def = AcceleratedKeyList[index];
 
 			//
@@ -1111,7 +1223,8 @@ short	Input::Get_Function( const char *name )
 	if ( name && name[0] ) {
 		// find function
 		for ( int function = 0; function < NUM_FUNCTIONS; function++ ) {
-			if ( !stricmp( name, Functions[function].Name ) ) {
+            // RM5248: stricmp
+            if ( !strcmp( name, Functions[function].Name ) ) {
 				return Functions[function].ID;
 			}
 		}
@@ -1138,7 +1251,7 @@ const char *Input::Get_Key_Name( short key_id )
 	//
 	// Check each slider name
 	//
-	for (index = 0; index < NUM_SLIDER_NAMES; index ++) {
+    for (int index = 0; index < NUM_SLIDER_NAMES; index ++) {
 		if (SliderNames[index].ID == key_id) {
 			return SliderNames[index].Name;
 		}
@@ -1159,7 +1272,8 @@ short	Input::Get_Key( const char *name )
 		// Check each button name
 		//
 		for (int index = 0; index < NUM_BUTTON_NAMES; index ++) {
-			if (::stricmp (name, ButtonNames[index].Name) == 0) {
+            // RM5248: stricmp
+            if (::strcmp (name, ButtonNames[index].Name) == 0) {
 				return ButtonNames[index].ID;
 			}
 		}
@@ -1167,8 +1281,9 @@ short	Input::Get_Key( const char *name )
 		//
 		// Check each slider name
 		//
-		for (index = 0; index < NUM_SLIDER_NAMES; index ++) {
-			if (::stricmp (name, SliderNames[index].Name) == 0) {
+        for (int index = 0; index < NUM_SLIDER_NAMES; index ++) {
+            // RM5248: stricmp
+            if (::strcmp (name, SliderNames[index].Name) == 0) {
 				return SliderNames[index].ID;
 			}
 		}
@@ -1637,7 +1752,8 @@ Input::Load_Misc_Settings (INIClass *input_ini)
 	MouseInvert					= input_ini->Get_Bool (SECTION_MISC_SETTINGS, ENTRY_MOUSE_INVERT, true);
 	Mouse2DInvert				= input_ini->Get_Bool (SECTION_MISC_SETTINGS, ENTRY_MOUSE_2D_INVERT, false);
 
-	bool is_target_steering	= input_ini->Get_Bool (ENTRY_TARGET_STEERING, false);
+    // RM5248: how did this compile before? added SECTION_MISC_SETTINGS
+    bool is_target_steering	= input_ini->Get_Bool (SECTION_MISC_SETTINGS, ENTRY_TARGET_STEERING, false);
 	VehicleGameObj::Set_Target_Steering (is_target_steering);
 
 	//

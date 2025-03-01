@@ -223,7 +223,7 @@ void	ControlClass::Import_Cs( BitStreamClass & packet )
 void ControlClass::Export_Cs( BitStreamClass & packet ) 
 {
 //	packet.Add(OneTimeBooleanBits,		BITPACK_ONE_TIME_BOOLEAN_BITS);
-	packet.Add(PendingOneTimeBooleanBits,		BITPACK_ONE_TIME_BOOLEAN_BITS);
+    packet.Add((UINT)PendingOneTimeBooleanBits,		BITPACK_ONE_TIME_BOOLEAN_BITS);
 	PendingOneTimeBooleanBits = 0;
 //	packet.Add(ContinuousBooleanBits,	BITPACK_CONTINUOUS_BOOLEAN_BITS);
 	packet.Add(PendingContinuousBooleanBits,	BITPACK_CONTINUOUS_BOOLEAN_BITS);

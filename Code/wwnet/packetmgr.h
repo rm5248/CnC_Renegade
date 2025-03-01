@@ -43,7 +43,15 @@
 #include "wwdebug.h"
 #include "vector.h"
 
+#ifdef _WIN32
 #include <winsock.h> // for SOCKET
+#else
+#include <sys/socket.h>
+typedef struct sockaddr SOCKADDR_IN;
+typedef int SOCKET;
+#endif
+
+#include "tcpmgr.h"
 
 #ifdef WWASSERT
 #ifndef pm_assert

@@ -48,6 +48,10 @@
 #include "wwstring.h"
 #include "win.h"
 
+// RM5248: need to convert these to be cross-platform
+#define HFONT void*
+#define HBITMAP void*
+
 /*
 ** FontCharsClass
 */

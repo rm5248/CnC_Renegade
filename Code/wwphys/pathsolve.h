@@ -42,6 +42,7 @@
 #define __PATH_SOLVE_H
 
 
+#include <stdint.h>
 #include "vector.h"
 #include "vector3.h"
 #include "hermitespline.h"
@@ -50,6 +51,7 @@
 #include "refcount.h"
 #include "postloadable.h"
 
+typedef int64_t __int64;
 
 /////////////////////////////////////////////////////////////////////////
 // Forward declarations

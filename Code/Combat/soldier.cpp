@@ -61,7 +61,7 @@
 #include "physcoltest.h"
 #include "htree.h"
 #include "animobj.h"
-#include "wwaudio.h"
+#include "WWAudio.h"
 #include "soldierobserver.h"
 #include "playertype.h"
 #include "crandom.h"
@@ -70,7 +70,7 @@
 #include "translatedb.h"
 #include "translateobj.h"
 #include "hlod.h"
-#include "audiblesound.h"
+#include "AudibleSound.h"
 #include "wwprofile.h"
 #include "globalsettings.h"
 #include "colors.h"
@@ -943,7 +943,7 @@ void	SoldierGameObj::Export_Rare( BitStreamClass &packet )
 	//	Add our definition ID to the packet
 	//
 	uint32 definition_id = Get_Definition ().Get_ID ();
-	packet.Add( definition_id );
+    packet.Add( (UINT)definition_id );
 }
 
 
@@ -963,7 +963,7 @@ void	SoldierGameObj::Import_Rare( BitStreamClass &packet )
 	//	Read the definition ID from the packet
 	//
 	uint32 definition_id	= 0;
-	packet.Get( definition_id );
+    packet.Get( (UINT&)definition_id );
 
 	//
 	//	Did our definition change?
@@ -1330,7 +1330,7 @@ Matrix3D tm(1);
 	static int crc = UNINITIALLIZED_CRC;
 tm.Rotate_X( 1.4f );
 	if ( crc == UNINITIALLIZED_CRC ) {
-		char * filelist[] = {
+        const char * filelist[] = {
 		"laif`wp-gga",								//"objects.ddb",              
 		"bqnlq-jmj",								//"armor.ini",                
 		"almfp-jmj",								//"bones.ini",                
@@ -3302,8 +3302,9 @@ RenderObjClass *	SoldierGameObj::Find_Head_Model( void )
 					//
 					//	Is this really a head model?
 					//
-					if ( ::stricmp (htree->Get_Name(), "S_A_HEAD") == 0 ||
-						  ::stricmp (htree->Get_Name(), "S_B_HEAD") == 0)
+                    // RM5248: stricmp
+                    if ( ::strcmp (htree->Get_Name(), "S_A_HEAD") == 0 ||
+                          ::strcmp (htree->Get_Name(), "S_B_HEAD") == 0)
 					{
 						head_model = render_obj;
 						break;
@@ -3712,8 +3713,9 @@ void	SoldierGameObj::Apply_Damage_Extended( const OffenseObjectClass & damager, 
 	float health_before = Get_Defense_Object()->Get_Health();
 	float armor_before = Get_Defense_Object()->Get_Shield_Strength();
 
-	if ( collision_box_name != NULL ) {
-		char * start = ::strchr( collision_box_name, '.' );
+    if ( collision_box_name != NULL ) {
+        // RM5248: cast to char*
+        char * start = ::strchr( (char*)collision_box_name, '.' );
 		if ( start != NULL ) {
 			start++;
 			float bone_scale = BonesManager::Get_Bone_Damage_Scale( start );
@@ -3860,7 +3862,8 @@ void	SoldierGameObj::Apply_Damage_Extended( const OffenseObjectClass & damager, 
 
 					#define	VISCEROID_NAME			"Visceroid"
 					// Not from other visceroids
-					if ( ::stricmp( Get_Definition().Get_Name(), VISCEROID_NAME ) != 0 ) {
+                    // RM5248: stricmp
+                    if ( ::strcmp( Get_Definition().Get_Name(), VISCEROID_NAME ) != 0 ) {
 						// Create a visceroid
 						PhysicalGameObj * vis = ObjectLibraryManager::Create_Object( VISCEROID_NAME );
 						if ( vis != NULL ) {
@@ -4514,7 +4517,8 @@ void	SoldierGameObj::Set_Special_Damage_Mode( ArmorWarheadManager::SpecialDamage
 				int sub_count = Peek_Model()->Get_Num_Sub_Objects_On_Bone( bone );
 				while ( --sub_count >= 0 ) {
 					RenderObjClass * sub = Peek_Model()->Get_Sub_Object_On_Bone( sub_count, bone );
-					if ( ::stricmp(sub->Get_Name(), _SpecialDamageEmitters[emitter].EmitterName ) == 0 ) {
+                    // RM5248: stricmp
+                    if ( ::strcmp(sub->Get_Name(), _SpecialDamageEmitters[emitter].EmitterName ) == 0 ) {
 						Peek_Model()->Remove_Sub_Object( sub );
 					}
 					sub->Release_Ref();
@@ -4656,7 +4660,8 @@ void	SoldierGameObj::Add_RenderObj( RenderObjClass * obj )
 RenderObjClass *	SoldierGameObj::Find_RenderObj( const char * name )
 {
 	for ( int i = 0; i < RenderObjList.Count(); i++ ) {
-		if ( !stricmp( RenderObjList[i]->Get_Name(), name ) ) {
+        // RM5248: stricmp
+        if ( !strcmp( RenderObjList[i]->Get_Name(), name ) ) {
 			return RenderObjList[i];
 		}
 	}

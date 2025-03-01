@@ -397,14 +397,14 @@ void WeaponBagClass::Import_Weapon_List(BitStreamClass & packet)
 		int total_rounds = packet.Get(total_rounds);
 		Add_Weapon(weapon_id, 0);
 
-		WeaponClass * weapon = NULL;
+        WeaponClass * weapon2 = NULL;
 		for( int i = 1; i < WeaponList.Count(); i++ ) {
 			if ( (int) WeaponList[i]->Get_Definition()->Get_ID() == weapon_id ) {
-				weapon = WeaponList[i];
+                weapon2 = WeaponList[i];
 			}
 		}
-		if ( weapon != NULL ) {
-			weapon->Set_Total_Rounds( total_rounds );
+        if ( weapon2 != NULL ) {
+            weapon2->Set_Total_Rounds( total_rounds );
 		}
 	}
 }

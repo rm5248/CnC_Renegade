@@ -30,6 +30,7 @@
 
 #include "always.h"
 #include "bittype.h"
+#include <windows.h>
 
 
 #pragma warning(disable:4514)

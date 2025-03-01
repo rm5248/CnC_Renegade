@@ -41,14 +41,14 @@
 #include "actionparams.h"
 #include "timemgr.h"
 #include "orator.h"
-#include "pathfind.h"
+#include "Pathfind.h"
 #include "globalsettings.h"
 #include "soldierobserver.h"
 #include "gameobjmanager.h"
 #include "conversationmgr.h"
 #include "debug.h"
-#include "wwaudio.h"
-#include "audiblesound.h"
+#include "WWAudio.h"
+#include "AudibleSound.h"
 #include "translatedb.h"
 #include "translateobj.h"
 #include "combat.h"
@@ -684,7 +684,7 @@ ActiveConversationClass::Save (ChunkSaveClass &csave)
 	//
 	//	Save each of the orators
 	//
-	for (index = 0; index < OratorList.Count (); index ++) {
+    for (int index = 0; index < OratorList.Count (); index ++) {
 		csave.Begin_Chunk (CHUNKID_ORATOR);
 			OratorList[index]->Save (csave);
 		csave.End_Chunk ();

@@ -61,7 +61,6 @@
 #include	<assert.h>
 #include	<stdlib.h>
 #include <string.h>
-#include <new.h>
 
 #ifdef _MSC_VER
 #pragma warning (disable : 4702) // unreachable code, happens with some uses of these templates
@@ -168,8 +167,12 @@ VectorClass<T>::VectorClass(int size, T const * array) :
 	**	object in this vector.
 	*/
 	if (size) {
-		if (array) {
-			Vector = new((void*)array) T[size];
+        if (array) {
+            // RM5248: call operator new() on the array(?)
+            // for now just allocate the data... not sure how to fix this.
+//            Vector = new((void*)array) T[size];
+            Vector = new T[size];
+            IsAllocated = true;
 		} else {
 			Vector = new T[size];
 			IsAllocated = true;
@@ -420,7 +423,9 @@ bool VectorClass<T>::Resize(int newsize, T const * array)
 		if (!array) {
 			newptr = new T[newsize];
 		} else {
-			newptr = new((void*)array) T[newsize];
+            // RM5248: operator new shenanigans
+//			newptr = new((void*)array) T[newsize];
+            newptr = new T[newsize];
 		}
 		IsValid = true;
 		if (!newptr) {
@@ -614,7 +619,7 @@ template<class T>
 bool DynamicVectorClass<T>::Resize(int newsize, T const * array)
 {
 	if (VectorClass<T>::Resize(newsize, array)) {
-		if (Length() < ActiveCount) ActiveCount = Length();
+        if (this->Length() < ActiveCount) ActiveCount = this->Length();
 		return(true);
 	}
 	return(false);
@@ -669,9 +674,9 @@ int DynamicVectorClass<T>::ID(T const & object)
 template<class T>
 bool DynamicVectorClass<T>::Add(T const & object)
 {
-	if (ActiveCount >= Length()) {
-		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
-			if (!Resize(Length() + GrowthStep)) {
+    if (ActiveCount >= this->Length()) {
+        if ((this->IsAllocated || !this->VectorMax) && GrowthStep > 0) {
+            if (!Resize(this->Length() + GrowthStep)) {
 
 				/*
 				**	Failure to increase the size of the vector is an error condition.
@@ -715,9 +720,9 @@ bool DynamicVectorClass<T>::Add(T const & object)
 template<class T>
 bool DynamicVectorClass<T>::Add_Head(T const & object)
 {
-	if (ActiveCount >= Length()) {
-		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
-			if (!Resize(Length() + GrowthStep)) {
+    if (ActiveCount >= this->Length()) {
+        if ((this->IsAllocated || !this->VectorMax) && GrowthStep > 0) {
+            if (!Resize(this->Length() + GrowthStep)) {
 
 				/*
 				**	Failure to increase the size of the vector is an error condition.
@@ -767,9 +772,9 @@ bool DynamicVectorClass<T>::Insert(int index,T const & object)
 	if (index < 0) return false;
 	if (index > ActiveCount) return false;
 
-	if (ActiveCount >= Length()) {
-		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
-			if (!Resize(Length() + GrowthStep)) {
+    if (ActiveCount >= this->Length()) {
+        if ((this->IsAllocated || !this->VectorMax) && GrowthStep > 0) {
+            if (!Resize(this->Length() + GrowthStep)) {
 
 				/*
 				**	Failure to increase the size of the vector is an error condition.
@@ -868,7 +873,7 @@ bool DynamicVectorClass<T>::Delete(int index)
 template<class T>
 void DynamicVectorClass<T>::Delete_All(void) 
 {
-	int len = VectorMax;
+    int len = this->VectorMax;
 	Clear();		// Forces destructor call on each object.
 	Resize(len);
 }
@@ -896,10 +901,10 @@ void DynamicVectorClass<T>::Delete_All(void)
 template<class T>
 T * DynamicVectorClass<T>::Uninitialized_Add(void)
 {
-	if (ActiveCount >= Length()) {
+    if (ActiveCount >= this->Length()) {
 //		if ((IsAllocated || !VectorMax) && GrowthStep > 0) {
 		if (GrowthStep > 0) {
-			if (!Resize(Length() + GrowthStep)) {
+            if (!Resize(this->Length() + GrowthStep)) {
 
 				/*
 				**	Failure to increase the size of the vector is an error condition.

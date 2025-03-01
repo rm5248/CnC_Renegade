@@ -56,8 +56,9 @@
 
 #else
 
-enum {false=0,true=1};
-typedef int bool;
+// RM5248: C++ now has bool
+//enum {false=0,true=1};
+//typedef int bool;
 
 #endif
 

@@ -136,8 +136,8 @@ void HumanRecoilClass::Initialize(RenderObjClass * model)
 	for (int recoil_bone = 0; recoil_bone < _RECOIL_BONE_COUNT; recoil_bone++) {
 		
 		for (int model_bone = 0; model_bone < tree->Num_Pivots(); model_bone++) {
-			
-			if (stricmp(_RecoilData[recoil_bone].BoneName, tree->Get_Bone_Name(model_bone)) == 0) {
+            // RM5248: stricmp
+            if (strcmp(_RecoilData[recoil_bone].BoneName, tree->Get_Bone_Name(model_bone)) == 0) {
 				_RecoilData[recoil_bone].BoneIndex = model_bone;
 				model_bone = tree->Num_Pivots();
 			}

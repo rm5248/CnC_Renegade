@@ -49,7 +49,7 @@
 #include "random.h"
 #include	"rendobj.h"
 #include "saveloadsubsystem.h"
-#include "soundenvironment.h"
+#include "SoundEnvironment.h"
 #include "texture.h"
 #include "vector.h"
 #include "vector2.h"
@@ -152,6 +152,8 @@ class WeatherSystemClass : public RenderObjClass
 			MAX_AGE					 = 1000000
 		};
 
+        // RM5248: change access control
+public:
 		struct RayStruct : public AutoPoolClass <RayStruct, GROWTH_STEP>
 		{
 			public:
@@ -164,7 +166,7 @@ class WeatherSystemClass : public RenderObjClass
 				Vector3			 EndPosition;			// Point of collision of ray with environment.
 				bool				 ValidSurfaceNormal;	// Does the ray intersect a phyical object?
 				Vector3			 SurfaceNormal;		// Normal of surface ray intersects (if any).
-		};
+        };
 
 		struct ParticleStruct : public AutoPoolClass <ParticleStruct, GROWTH_STEP>
 		{
@@ -185,6 +187,7 @@ class WeatherSystemClass : public RenderObjClass
 				unsigned char	 RenderMode;
 				unsigned char	 Pad [2];				// Pad structure to 4-byte multiple.
 		};
+protected:
 
 		// Utility functions.
 		float Spawn_Count (float time) {return (ParticleDensity * EmitterSize * EmitterSize * time);}

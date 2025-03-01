@@ -42,13 +42,13 @@
 #include "combatsaveload.h"
 #include "physstaticsavesystem.h"
 #include "physdynamicsavesystem.h"
-#include "audiosaveload.h"
+#include "AudioSaveLoad.h"
 #include "matrix3d.h"
 #include "scripts.h"
 #include "combat.h"
 #include "backgroundmgr.h"
 #include "conversationmgr.h"
-#include "weathermgr.h"
+#include "WeatherMgr.h"
 #include "wwmemlog.h"
 #include "translatedb.h"
 #include "mapmgr.h"
@@ -146,6 +146,8 @@ void _cdecl SaveGameManager::Save_Game( const char * filename, ... )
 
 }
 
+#define _MAX_FNAME 4096
+#define _MAX_EXT 12
 
 void	SaveGameManager::Pre_Load_Game
 (
@@ -159,7 +161,8 @@ void	SaveGameManager::Pre_Load_Game
 	//
 	char root_name[_MAX_FNAME] = { 0 };
 	char extension[_MAX_EXT] = { 0 };
-	::_splitpath (filename, NULL, NULL, root_name, extension);
+    // RM5248: fix splitpath(std::filesystem?)
+//	::_splitpath (filename, NULL, NULL, root_name, extension);
 
 	SystemInfoLog::Set_Current_Level(root_name);
 	filename_to_load = filename;
@@ -175,7 +178,8 @@ void	SaveGameManager::Pre_Load_Game
 	//
 	//	Is this a mix file?
 	//
-	if (::strcmpi (extension, ".mix") == 0) {
+    // RM5248: strcmpi
+    if (::strcmp (extension, ".mix") == 0) {
 		
 		StringClass thumb_filename(root_name,true);
 		thumb_filename+=".thu";
@@ -190,13 +194,15 @@ void	SaveGameManager::Pre_Load_Game
 		//
 		//	HACK HACK - Put the level 9 mix file first...
 		//
-		if (	::lstrcmpi (filename, "M09.mix") == 0 &&
+        // RM5248: lstrcmpi
+        if (	::strcmp (filename, "M09.mix") == 0 &&
 				FileFactoryListClass::Get_Instance () != NULL)
 		{
 			FileFactoryListClass::Get_Instance ()->Set_Search_Start(filename);
 		}
 
-	} else if (::strcmpi (extension, ".lsd") == 0) {		
+        // RM5248: strcmpi
+    } else if (::strcmp (extension, ".lsd") == 0) {
 		lsd_filename = filename;
 		filename_to_load.Format ("%s.ldd", root_name);
 	} else {
@@ -208,7 +214,8 @@ void	SaveGameManager::Pre_Load_Game
 		if (Peek_Map_Name (filename, map_name)) {
 
 			char mix_root_name[_MAX_FNAME] = { 0 };
-			::_splitpath ((const char *)map_name, NULL, NULL, mix_root_name, NULL);
+            // RM5248: splitpath
+//			::_splitpath ((const char *)map_name, NULL, NULL, mix_root_name, NULL);
 
 			//
 			//	Build the mix filename from the map name...
@@ -220,7 +227,8 @@ void	SaveGameManager::Pre_Load_Game
 			//
 			//	HACK HACK - Put the level 9 mix file first...
 			//
-			if (	::lstrcmpi (mix_filename, "M09.mix") == 0 &&
+            // RM5248: lstrcmpi
+            if (	::strcmp (mix_filename, "M09.mix") == 0 &&
 					FileFactoryListClass::Get_Instance () != NULL)
 			{
 				FileFactoryListClass::Get_Instance ()->Set_Search_Start(mix_filename);
@@ -317,7 +325,8 @@ bool	SaveGameManager::Smart_Peek_Description
 	//
 	char root_name[_MAX_FNAME] = { 0 };
 	char extension[_MAX_EXT] = { 0 };
-	::_splitpath (filename, NULL, NULL, root_name, extension);
+    // RM5248: splitpath
+//	::_splitpath (filename, NULL, NULL, root_name, extension);
 
 	StringClass filename_to_load(filename,true);
 
@@ -325,7 +334,8 @@ bool	SaveGameManager::Smart_Peek_Description
 	//	Is this a mix file?
 	//
 	FileFactoryClass * mix_factory = NULL;
-	if (::strcmpi (extension, ".mix") == 0) {		
+    // RM5248: strcmpi
+    if (::strcmp (extension, ".mix") == 0) {
 		
 		//
 		// Configure a mix file factory for this mix file
@@ -411,7 +421,7 @@ bool SaveGameManager::Peek_Description
 	//
 	if (mission_name_id == 0) {
 		mission_name.Convert_From ( map_filename );
-		WCHAR *extension = ::wcsrchr (mission_name, L'.');
+        WCHAR *extension = ::wcsrchr (mission_name.Peek_Buffer(), L'.');
 		if (extension != NULL) {
 			extension[0] = 0;
 		}

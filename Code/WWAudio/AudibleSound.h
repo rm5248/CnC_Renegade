@@ -42,7 +42,7 @@
 #define __SOUNDOBJ_H
 
 #pragma warning (push, 3)
-#include "mss.h"
+//#include "mss.h" // RM5248: mss = miles sound system
 #pragma warning (pop)
 
 //#include <malloc.h>
@@ -50,7 +50,7 @@
 #include "matrix3d.h"
 #include "refcount.h"
 #include "rawfile.h"
-#include "soundsceneobj.h"
+#include "SoundSceneObj.h"
 #include "vector.h"
 #include "wwstring.h"
 #include "definition.h"

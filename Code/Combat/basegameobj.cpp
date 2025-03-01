@@ -71,7 +71,7 @@ NetworkGameObjectFactoryClass::Prep_Packet (NetworkObjectClass *object, cPacket 
 	//
 	//	Add the definition ID of the object to the packet
 	//
-	packet.Add (game_obj->Get_Definition ().Get_ID ());
+    packet.Add ((UINT)game_obj->Get_Definition ().Get_ID ());
 	return ;
 }
 

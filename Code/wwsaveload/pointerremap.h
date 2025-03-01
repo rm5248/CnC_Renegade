@@ -50,6 +50,8 @@
 #include "always.h"
 #include "vector.h"
 
+#define __cdecl
+
 class RefCountClass;
 
 

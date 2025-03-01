@@ -121,23 +121,23 @@ class FastCriticalSectionClass
 
 	void Thread_Safe_Set_Flag()
 	{
-		volatile unsigned& nFlag=Flag;
+//		volatile unsigned& nFlag=Flag;
 
-		#define ts_lock _emit 0xF0
-		assert(((unsigned)&nFlag % 4) == 0);
+//		#define ts_lock _emit 0xF0
+//		assert(((unsigned)&nFlag % 4) == 0);
 
-		__asm mov ebx, [nFlag]
-		__asm ts_lock
-		__asm bts dword ptr [ebx], 0
-		__asm jc The_Bit_Was_Previously_Set_So_Try_Again
-		return;
+//		__asm mov ebx, [nFlag]
+//		__asm ts_lock
+//		__asm bts dword ptr [ebx], 0
+//		__asm jc The_Bit_Was_Previously_Set_So_Try_Again
+//		return;
 
-		The_Bit_Was_Previously_Set_So_Try_Again:
-		ThreadClass::Switch_Thread();
-		__asm mov ebx, [nFlag]
-		__asm ts_lock
-		__asm bts dword ptr [ebx], 0
-		__asm jc  The_Bit_Was_Previously_Set_So_Try_Again
+//		The_Bit_Was_Previously_Set_So_Try_Again:
+//		ThreadClass::Switch_Thread();
+//		__asm mov ebx, [nFlag]
+//		__asm ts_lock
+//		__asm bts dword ptr [ebx], 0
+//		__asm jc  The_Bit_Was_Previously_Set_So_Try_Again
 	}
 
 	WWINLINE void Thread_Safe_Clear_Flag()

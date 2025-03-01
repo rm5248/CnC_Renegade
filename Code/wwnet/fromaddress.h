@@ -32,7 +32,12 @@
 #define FROMADDRESS_H
 
 #include "win.h"
+#ifdef _WIN32
 #include <winsock.h>
+#else
+#include <sys/socket.h>
+typedef struct sockaddr SOCKADDR_IN;
+#endif
 
 //
 // This trivial class exists solely to speed compile times.

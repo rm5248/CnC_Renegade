@@ -44,8 +44,8 @@
 #include "crandom.h"
 #include "weapons.h"
 #include "rendobj.h"
-#include "wwaudio.h"
-#include "audiblesound.h"
+#include "WWAudio.h"
+#include "AudibleSound.h"
 #include "explosion.h"
 #include "phys.h"
 #include "rbody.h"
@@ -53,7 +53,7 @@
 #include "soldier.h"
 #include "waypath.h"
 #include "waypoint.h"
-#include "pathfind.h"
+#include "Pathfind.h"
 #include "pathmgr.h"
 #include "string_ids.h"
 #include "translateobj.h"
@@ -2001,7 +2001,8 @@ SakuraBossGameObj::Set_Sakura_State (int new_state)
 				//	Find the first available taunt
 				//
 				int taunt_id = 0;
-				for (int index = 0; index < MAX_TAUNTS; index ++) {
+                int index;
+                for (index = 0; index < MAX_TAUNTS; index ++) {
 					if (TauntList[index] != 0) {
 						taunt_id = TauntList[index] - 1;
 						TauntList[index] = 0;

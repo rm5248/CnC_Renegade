@@ -53,7 +53,6 @@
 #include "bittype.h"
 #include "wwdebug.h"
 #include "mutex.h"
-#include <new.h>
 #include <stdlib.h>
 #include <stddef.h>
 

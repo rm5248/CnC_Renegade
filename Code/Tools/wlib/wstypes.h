@@ -92,12 +92,12 @@ Standard type definitions for the sake of portability and readability.
 #define RO const
 
 typedef char               bit8;
-typedef char               sint8;
-typedef unsigned char      uint8;
-typedef signed short int   sint16;
-typedef unsigned short int uint16;
-typedef signed int         sint32;
-typedef unsigned int       uint32;
+//typedef char               sint8;
+//typedef unsigned char      uint8;
+//typedef signed short int   sint16;
+//typedef unsigned short int uint16;
+//typedef signed int         sint32;
+//typedef unsigned int       uint32;
 
 typedef float              float32;
 typedef double             float64;

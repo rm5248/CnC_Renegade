@@ -47,7 +47,7 @@
 #include "assets.h"
 #include "timemgr.h"
 #include "soldier.h"
-#include "SoundScene.H"
+#include "SoundScene.h"
 #include "weapons.h"
 #include "vehicle.h"
 #include "bones.h"
@@ -65,13 +65,13 @@
 #include "dazzle.h"
 #include "messagewindow.h"
 #include "hudinfo.h"
-#include "weathermgr.h"
+#include "WeatherMgr.h"
 #include "thread.h"
 #include "savegame.h"
 #include "assetdep.h"
 #include "saveloadstatus.h"
 #include <stdio.h>
-#include "soundenvironment.h"
+#include "SoundEnvironment.h"
 #include "weaponview.h"
 #include "hud.h"
 #include "mapmgr.h"
@@ -84,13 +84,13 @@
 #include "definitionfactory.h"
 #include "globalsettings.h"
 #include "dx8wrapper.h"
-#include "except.h"
+#include "Except.h"
 #include "cheatmgr.h"
 #include "systeminfolog.h"
 #include "assetstatus.h"
 #include "wwmemlog.h"
 #include "unitcoordinationzonemgr.h"
-#include "fastallocator.h"
+#include "FastAllocator.h"
 #include "screenfademanager.h"
 #include "animatedsoundmgr.h"
 #include "render2dsentence.h"
@@ -98,6 +98,9 @@
 #include "translatedb.h"
 #include "string_ids.h"
 
+#define _GNU_SOURCE
+#include <unistd.h>
+#include <sys/types.h>
 
 const int DEFAULT_MAX_SHADOWS = 4;
 
@@ -355,7 +358,8 @@ StringClass	_load_map_name;
 static class LoadThreadClass : public ThreadClass
 {
 public:
-	LoadThreadClass(const char *thread_name = "Game loader thread") : ThreadClass(thread_name, &Exception_Handler) {}
+    // RM5248: Exception_Handler is windows specific
+    LoadThreadClass(const char *thread_name = "Game loader thread") : ThreadClass(thread_name/*, &Exception_Handler*/) {}
 
 	void Thread_Function() {
 
@@ -367,7 +371,9 @@ public:
 
 		#ifndef PARAM_EDITING_ON
 			// Tell the datasafe to expect calls from this thread now.
-			GenericDataSafeClass::Set_Preferred_Thread(GetCurrentThreadId());
+        // RM5248: std::thread not working for some reason
+        int id = gettid();
+            GenericDataSafeClass::Set_Preferred_Thread(id);
 		#endif // PARAM_EDITING_ON
 
 		CombatManager::Inc_Load_Progress();

@@ -46,7 +46,7 @@
 #include <fcntl.h>
 #include <limits.h>
 
-typedef sint32         SOCKET;
+typedef int32_t         SOCKET;
 #define closesocket    close
 #define SOCKET_ERROR   -1
 #define INVALID_SOCKET -1

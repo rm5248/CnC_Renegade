@@ -43,13 +43,26 @@
 
 #include "always.h"
 #pragma warning (push, 3)
-#include "Mss.H"
+//#include "Mss.H"
 #pragma warning (pop)
 
-#include "Vector.H"
-#include "SoundBuffer.H"
-#include "AudioEvents.H"
+#include "pluglib/Vector.H"
+#include "SoundBuffer.h"
+#include "AudioEvents.h"
 #include "wwstring.h"
+
+// RM5248: what should these be?
+#define HPROVIDER void*
+#define HDIGDRIVER void*
+#define LPWAVEFORMAT void*
+#define LPCTSTR const char*
+#define HSAMPLE void*
+#define H3DSAMPLE void*
+#define H3DPOBJECT void*
+typedef unsigned int U32;
+typedef int S32;
+#define AILCALLBACK
+#define HTIMER int
 
 /////////////////////////////////////////////////////////////////////////////////
 // Forward declaration
@@ -616,8 +629,8 @@ private:
 			: string_id (0), buffer (NULL) {}
 
 		_CACHE_ENTRY_STRUCT &operator= (const _CACHE_ENTRY_STRUCT &src) { string_id = ::strdup (src.string_id); REF_PTR_SET (buffer, src.buffer); return *this; }
-		operator== (const _CACHE_ENTRY_STRUCT &src) { return false; }
-		operator!= (const _CACHE_ENTRY_STRUCT &src) { return true; }
+        bool operator== (const _CACHE_ENTRY_STRUCT &src) { return false; }
+        bool operator!= (const _CACHE_ENTRY_STRUCT &src) { return true; }
 	} CACHE_ENTRY_STRUCT;
 
 
@@ -632,8 +645,8 @@ private:
 		_LOGICAL_TYPE_STRUCT (int _id, LPCTSTR name)
 			:	display_name (name), id (_id) {}
 
-		operator== (const _LOGICAL_TYPE_STRUCT &src) { return false; }
-		operator!= (const _LOGICAL_TYPE_STRUCT &src) { return true; }
+        bool operator== (const _LOGICAL_TYPE_STRUCT &src) { return false; }
+        bool operator!= (const _LOGICAL_TYPE_STRUCT &src) { return true; }
 	} LOGICAL_TYPE_STRUCT;
 
 	//////////////////////////////////////////////////////////////////////
