@@ -21,10 +21,10 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <windowsx.h>
+// RM5248: no idea what windowsx.h is
+//#include <windowsx.h>
 #include <stdlib.h>
 
-#include"wstypes.h"
 
   extern HINSTANCE Global_instance;
   extern LPSTR     Global_commandline;

@@ -36,14 +36,14 @@
 #ifndef __WOLDOWNLOAD_H__
 #define __WOLDOWNLOAD_H__
 
-#include <atlbase.h>
+//#include <atlbase.h>
 #include "RefCounted.h"
 #include "RefPtr.h"
 #include "WaitCondition.h"
 
 namespace WOL 
 {
-#include <WOLAPI\wolapi.h>
+#include <wolapi/WOLAPI.h>
 }
 
 namespace WWOnline {
@@ -53,7 +53,7 @@ class DownloadEvent;
 
 class Download :
 		public RefCounted,
-		public WOL::IDownloadEvent,
+//		public WOL::IDownloadEvent, // RM5248
 		public Notifier<DownloadEvent>
 	{
 	public:

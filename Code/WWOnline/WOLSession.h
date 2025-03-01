@@ -39,7 +39,6 @@
 #ifndef __WOLSESSION_H__
 #define __WOLSESSION_H__
 
-#include <atlbase.h>
 #include "WOLLoginInfo.h"
 #include "WOLUser.h"
 #include "WOLChannel.h"
@@ -48,12 +47,12 @@
 #include "WOLDownload.h"
 #include "WOLPageMsg.h"
 #include "RefPtr.h"
-#include <WWLib\Notify.h>
-#include <WWLib\WideString.h>
+#include <wwlib/Notify.h>
+#include <wwlib/widestring.h>
 
 namespace WOL
 {
-#include <WOLAPI\wolapi.h>
+#include <wolapi/WOLAPI.h>
 }
 
 #if defined(_MSC_VER)

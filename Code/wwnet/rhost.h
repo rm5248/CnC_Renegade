@@ -38,7 +38,8 @@
 #include "wwdebug.h"
 
 #include "win.h"
-#include <winsock.h>
+// RM5248: may need to replace winsock
+//#include <winsock.h>
 
 //const USHORT MAX_MESSAGE_TYPES = 256;
 

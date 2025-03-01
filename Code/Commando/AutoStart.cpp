@@ -35,7 +35,7 @@
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 #include "always.h"
-#include "autostart.h"
+#include "AutoStart.h"
 //#include "dlgmplangametype.h"
 #include "gameinitmgr.h"
 #include "registry.h"
@@ -44,24 +44,26 @@
 #include "gameinitmgr.h"
 #include "campaign.h"
 #include "win.h"
-#include "except.h"
+#include "Except.h"
 #include "listctrl.h"
-#include "dlgwolautostart.h"
-#include "dlgdownload.h"
+#include "DlgWOLAutoStart.h"
+#include "DlgDownload.h"
 #include "translatedb.h"
 #include "string_ids.h"
 #include "slavemaster.h"
 #include "gamesideservercontrol.h"
 #include "gamedata.h"
 #include "nat.h"
-#include "consolemode.h"
-#include "wwonline\wolserver.h"
-#include "notify.h"
-#include "serversettings.h"
-#include "wolbuddymgr.h"
+#include "ConsoleMode.h"
+#include "WWOnline/WOLServer.h"
+#include "Notify.h"
+#include "ServerSettings.h"
+#include "WOLBuddyMgr.h"
 #include "bandwidthcheck.h"
 #include "bandwidth.h"
+#ifdef GAMESPY_SUPPORT /* RM5248 */
 #include "gamespyadmin.h"
+#endif
 #include "specialbuilds.h"
 
 /*

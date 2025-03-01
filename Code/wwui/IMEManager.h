@@ -36,12 +36,12 @@
 #ifndef __IMEMANAGER_H__
 #define __IMEMANAGER_H__
 
-#include "RefCount.h"
+#include "refcount.h"
 #include "IMECandidate.h"
 #include "Notify.h"
-#include "WideString.h"
+#include "widestring.h"
 #include "win.h"
-#include <imm.h>
+//#include <imm.h>
 
 namespace IME {
 

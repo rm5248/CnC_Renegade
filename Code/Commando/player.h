@@ -49,8 +49,10 @@
 #include "networkobject.h"
 #include "netclassids.h"
 #include "wwstring.h"
+#ifdef GAMESPY_SUPPORT /* RM5248 */
 #include "gamespyauthmgr.h"
 #include "gamespybanlist.h"
+#endif
 
 class Vector3;
 class ChunkSaveClass;
@@ -190,6 +192,7 @@ class cPlayer : public PlayerDataClass, public NetworkObjectClass {
 		//
 		// GameSpy support
 		//
+        #ifdef GAMESPY_SUPPORT /* RM5248 */
 		void								Set_GameSpy_Auth_State(GAMESPY_AUTH_STATE_ENUM state);
 		GAMESPY_AUTH_STATE_ENUM		Get_GameSpy_Auth_State(void)	const	{return GameSpyAuthState;}
 		void								Set_GameSpy_Auth_State_Entry_Time_Ms(DWORD time_ms);
@@ -202,6 +205,7 @@ class cPlayer : public PlayerDataClass, public NetworkObjectClass {
 		GAMESPY_KICK_STATE_ENUM				Get_GameSpy_Kick_State(void)	const	{return GameSpyKickState;}
 		void								Set_GameSpy_Kick_State_Entry_Time_Ms(DWORD time_ms);
 		DWORD								Get_GameSpy_Kick_State_Entry_Time_Ms(void) const {return GameSpyKickStateEntryTimeMs;}
+#endif
 
 		//
 		// N.B. If you change the state of any of these on the server then you
@@ -241,12 +245,14 @@ class cPlayer : public PlayerDataClass, public NetworkObjectClass {
 		//
 		// GameSpy support
 		//
+        #ifdef GAMESPY_SUPPORT /* RM5248 */
 		GAMESPY_AUTH_STATE_ENUM		GameSpyAuthState;
 		DWORD								GameSpyAuthStateEntryTimeMs;
 		StringClass						GameSpyChallengeString;
 		StringClass						GameSpyHashId;
 		GAMESPY_KICK_STATE_ENUM		GameSpyKickState;
 		DWORD						GameSpyKickStateEntryTimeMs;
+#endif
 
 		//
 		// N.B. If you change the state of any of these on the server then you

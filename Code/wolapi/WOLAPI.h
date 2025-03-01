@@ -28,7 +28,8 @@
 */
 //@@MIDL_FILE_HEADING(  )
 
-
+// RM5248
+#if 0
 /* verify that the <rpcndr.h> version is high enough to compile this file*/
 #ifndef __REQUIRED_RPCNDR_H_VERSION__
 #define __REQUIRED_RPCNDR_H_VERSION__ 440
@@ -432,6 +433,7 @@ void __RPC_STUB IRTPatcherEvent_OnTermination_Stub(
 
 /* interface IChat */
 /* [object][unique][helpstring][uuid] */ 
+
 
 typedef long time_t;
 
@@ -5519,3 +5521,199 @@ Chat2;
 #endif
 
 #endif
+
+#endif /* RM5248 */
+
+#ifndef WOLAPI_H_RM
+#define WOLAPI_H_RM
+
+#define __RPC_FAR
+typedef long time_t;
+
+typedef
+enum Locale
+    {	LOC_UNKNOWN	= 0,
+    LOC_OTHER	= LOC_UNKNOWN + 1,
+    LOC_USA	= LOC_OTHER + 1,
+    LOC_CANADA	= LOC_USA + 1,
+    LOC_UK	= LOC_CANADA + 1,
+    LOC_GERMANY	= LOC_UK + 1,
+    LOC_FRANCE	= LOC_GERMANY + 1,
+    LOC_SPAIN	= LOC_FRANCE + 1,
+    LOC_NETHERLANDS	= LOC_SPAIN + 1,
+    LOC_BELGIUM	= LOC_NETHERLANDS + 1,
+    LOC_AUSTRIA	= LOC_BELGIUM + 1,
+    LOC_SWITZERLAND	= LOC_AUSTRIA + 1,
+    LOC_ITALY	= LOC_SWITZERLAND + 1,
+    LOC_DENMARK	= LOC_ITALY + 1,
+    LOC_SWEDEN	= LOC_DENMARK + 1,
+    LOC_NORWAY	= LOC_SWEDEN + 1,
+    LOC_FINLAND	= LOC_NORWAY + 1,
+    LOC_ISRAEL	= LOC_FINLAND + 1,
+    LOC_SOUTH_AFRICA	= LOC_ISRAEL + 1,
+    LOC_JAPAN	= LOC_SOUTH_AFRICA + 1,
+    LOC_SOUTH_KOREA	= LOC_JAPAN + 1,
+    LOC_CHINA	= LOC_SOUTH_KOREA + 1,
+    LOC_SINGAPORE	= LOC_CHINA + 1,
+    LOC_TAIWAN	= LOC_SINGAPORE + 1,
+    LOC_MALAYSIA	= LOC_TAIWAN + 1,
+    LOC_AUSTRALIA	= LOC_MALAYSIA + 1,
+    LOC_NEW_ZEALAND	= LOC_AUSTRALIA + 1,
+    LOC_BRAZIL	= LOC_NEW_ZEALAND + 1,
+    LOC_THAILAND	= LOC_BRAZIL + 1,
+    LOC_ARGENTINA	= LOC_THAILAND + 1,
+    LOC_PHILIPPINES	= LOC_ARGENTINA + 1,
+    LOC_GREECE	= LOC_PHILIPPINES + 1,
+    LOC_IRELAND	= LOC_GREECE + 1,
+    LOC_POLAND	= LOC_IRELAND + 1,
+    LOC_PORTUGAL	= LOC_POLAND + 1,
+    LOC_MEXICO	= LOC_PORTUGAL + 1,
+    LOC_RUSSIA	= LOC_MEXICO + 1,
+    LOC_TURKEY	= LOC_RUSSIA + 1
+    }	Locale;
+
+struct  Highscore
+    {
+    unsigned int sku;
+    unsigned int wins;
+    unsigned int losses;
+    unsigned int points;
+    unsigned int rank;
+    unsigned int accomplishments;
+    struct Highscore __RPC_FAR *next;
+    unsigned char login_name[ 40 ];
+    };
+struct  Ladder
+    {
+    unsigned int sku;
+    unsigned int team_no;
+    unsigned int wins;
+    unsigned int losses;
+    unsigned int points;
+    unsigned int kills;
+    unsigned int rank;
+    unsigned int rung;
+    unsigned int disconnects;
+    unsigned int team_rung;
+    unsigned int provisional;
+    unsigned int last_game_date;
+    unsigned int win_streak;
+    unsigned int reserved1;
+    unsigned int reserved2;
+    struct Ladder __RPC_FAR *next;
+    unsigned char login_name[ 40 ];
+    Locale locale;
+    };
+typedef int GroupID;
+
+struct  Server
+    {
+    int gametype;
+    int chattype;
+    int timezone;
+    float longitude;
+    float lattitude;
+    struct Server __RPC_FAR *next;
+    unsigned char name[ 71 ];
+    unsigned char connlabel[ 5 ];
+    unsigned char conndata[ 128 ];
+    unsigned char login[ 10 ];
+    unsigned char password[ 10 ];
+    };
+struct  Channel
+    {
+    int type;
+    unsigned int minUsers;
+    unsigned int maxUsers;
+    unsigned int currentUsers;
+    unsigned int official;
+    unsigned int tournament;
+    unsigned int ingame;
+    unsigned int flags;
+    unsigned long reserved;
+    unsigned long ipaddr;
+    int latency;
+    int hidden;
+    struct Channel __RPC_FAR *next;
+    unsigned char name[ 17 ];
+    unsigned char topic[ 81 ];
+    unsigned char location[ 65 ];
+    unsigned char key[ 9 ];
+    unsigned char exInfo[ 41 ];
+    };
+struct  User
+    {
+    unsigned int flags;
+    GroupID group;
+    unsigned long reserved;
+    unsigned long reserved2;
+    unsigned long reserved3;
+    unsigned long squadID;
+    unsigned long ipaddr;
+    unsigned long squad_icon;
+    struct User __RPC_FAR *next;
+    unsigned char name[ 10 ];
+    unsigned char squadname[ 41 ];
+    unsigned char squadabbrev[ 10 ];
+    Locale locale;
+    int team;
+    };
+struct  Group
+    {
+    GroupID ident;
+    int type;
+    unsigned int members;
+    struct Group __RPC_FAR *next;
+    unsigned char name[ 65 ];
+    };
+struct  Squad
+    {
+    unsigned long id;
+    int sku;
+    int members;
+    int color1;
+    int color2;
+    int color3;
+    int icon1;
+    int icon2;
+    int icon3;
+    struct Squad __RPC_FAR *next;
+    int rank;
+    int team;
+    int status;
+    unsigned char email[ 81 ];
+    unsigned char icq[ 17 ];
+    unsigned char motto[ 81 ];
+    unsigned char url[ 129 ];
+    unsigned char name[ 41 ];
+    unsigned char abbreviation[ 41 ];
+    };
+struct  Update
+    {
+    unsigned long SKU;
+    unsigned long version;
+    int required;
+    struct Update __RPC_FAR *next;
+    unsigned char server[ 65 ];
+    unsigned char patchpath[ 256 ];
+    unsigned char patchfile[ 33 ];
+    unsigned char login[ 33 ];
+    unsigned char password[ 65 ];
+    unsigned char localpath[ 256 ];
+    };
+typedef struct Server Server;
+
+typedef struct Channel Channel;
+
+typedef struct User User;
+
+typedef struct Group Group;
+
+typedef struct Update Update;
+
+typedef struct Ladder Ladder;
+
+typedef struct Highscore Highscore;
+
+typedef struct Squad Squad;
+#endif /* WOLAPI_H_RM */

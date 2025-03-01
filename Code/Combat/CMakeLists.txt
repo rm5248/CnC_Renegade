@@ -288,6 +288,7 @@ target_include_directories(combat_lib PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../wwu
 target_include_directories(combat_lib PRIVATE ../WWMath)
 target_include_directories(combat_lib PRIVATE ../wwdebug)
 target_include_directories(combat_lib PRIVATE ../wwsaveload)
+target_include_directories(combat_lib PRIVATE ../)
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 #    TODO: need to enable WWDEBUG for debug builds, but need to fix the cross-platform stuff

@@ -41,7 +41,9 @@
 #ifndef _SLAVEMASTER_H
 #define _SLAVEMASTER_H
 
-#include <winbase.h>
+// RM5248: set MAX_PATH to make it easy
+//#include <winbase.h>
+#define MAX_PATH 255
 
 #define MAX_SLAVES	7
 
@@ -78,7 +80,8 @@ class SlaveServerClass
 		unsigned short ControlPort;
 		int	Bandwidth;
 
-		PROCESS_INFORMATION ProcessInfo;
+        // RM5248: disable PROCESS_INFORMATION to get it to compile
+//		PROCESS_INFORMATION ProcessInfo;
 };
 
 

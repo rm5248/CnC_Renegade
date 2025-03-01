@@ -39,12 +39,12 @@
 
 #include "RefCounted.h"
 #include "RefPtr.h"
-#include <WWLib\Notify.h>
-#include <WWLib\WideString.h>
+#include <wwlib/Notify.h>
+#include <wwlib/widestring.h>
 
 namespace WOL
 {
-#include <WOLAPI\wolapi.h>
+#include <wolapi/WOLAPI.h>
 }
 
 #if defined(_MSC_VER)
@@ -70,7 +70,7 @@ class ChannelData :
 			const {return mChannelName;}
 
 		int GetType(void) const
-			{return mData.type;}
+            {return mData.type;}
 
 		void SetLatency(int latency);
 

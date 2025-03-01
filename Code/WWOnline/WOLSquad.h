@@ -37,12 +37,12 @@
 
 #include "RefCounted.h"
 #include "RefPtr.h"
-#include <WWLib\WideString.h>
+#include <wwlib/widestring.h>
 #include "WOLLadder.h"
 
 namespace WOL
 {
-#include <wolapi\wolapi.h>
+#include <wolapi/WOLAPI.h>
 }
 
 #if defined(_MSC_VER)
@@ -172,4 +172,4 @@ class SquadEvent
 
 }
 
-#endif __WOLSQUAD_H__
+#endif /*__WOLSQUAD_H__*/

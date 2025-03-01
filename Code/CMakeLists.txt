@@ -8,8 +8,10 @@ set(CMAKE_CXX_FLAGS "-m32")
 set(renegade_sources "")
 
 add_subdirectory(Combat)
-add_subdirectory(wwlib)
-add_subdirectory(WWMath)
+add_subdirectory(Commando)
+#add_subdirectory(Launcher)
+#add_subdirectory(wwlib)
+#add_subdirectory(WWMath)
 
 #add_executable(renegade foo.cpp)
 #target_link_libraries(renegade PRIVATE combat_lib)

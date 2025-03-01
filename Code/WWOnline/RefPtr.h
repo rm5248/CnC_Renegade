@@ -238,9 +238,10 @@ template<typename Type> class RefPtr :
 			}
 
 	private:
-		friend RefPtr<Type> Dynamic_Cast(RefPtrBase&);
-		friend RefPtr<Type> Reinterpret_Cast(RefPtrBase&);
-		friend RefPtr<Type> Const_Cast(RefPtrConst<Type>&);
+        // RM5248: not sure what these are doing at hte moment.
+//		friend RefPtr<Type> Dynamic_Cast(RefPtrBase&);
+//		friend RefPtr<Type> Reinterpret_Cast(RefPtrBase&);
+//		friend RefPtr<Type> Const_Cast(RefPtrConst<Type>&);
 	};
 
 

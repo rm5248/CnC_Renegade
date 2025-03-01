@@ -32,7 +32,13 @@
 #define NETUTIL_H
 
 #include "win.h"
+#ifdef _WIN32
 #include <winsock.h>
+#else
+#include <sys/socket.h>
+typedef struct sockaddr SOCKADDR_IN;
+typedef struct sockaddr_in* LPSOCKADDR_IN;
+#endif
 
 #include "bittype.h"
 

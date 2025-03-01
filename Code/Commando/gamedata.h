@@ -49,13 +49,19 @@
 #include "widestring.h"
 #include "radar.h"
 #include "DlgMPTeamSelect.h"
-#include <WWLib\Signaler.h>
+#include <wwlib/Signaler.h>
 
 const int		MAX_PASSWORD_SIZE			= 16;				//including NULL
 const int		MAX_MAPNAME_SIZE			= 28;				//including NULL
 const LPCSTR	SERVER_CONFIG_PREFIX		= "svrcfg_";
 const int		MAX_MOTD_LENGTH			= 100;
 #define MAX_CLAN_SLOTS 2
+
+struct SYSTEMTIME{
+  int a;
+};
+
+#define LPSYSTEMTIME struct SYSTEMTIME*
 
 class SoldierGameObj;
 class cPacket;
@@ -234,7 +240,7 @@ class	cGameData :
 		float				Get_Maximum_World_Distance(void) {return MaximumWorldDistance;}
 		void				Set_Maximum_World_Distance(float distance);
 		unsigned long	Get_Frame_Count(void) const {return FrameCount;}
-		LPSYSTEMTIME	Get_Game_Start_Time(void) {return &GameStartTime;}
+        LPSYSTEMTIME	Get_Game_Start_Time(void) {return &GameStartTime;}
 		int				Get_Duration_Seconds(void);
 		void				Set_Min_Qualifying_Time_Minutes(int minutes);
 		int				Get_Min_Qualifying_Time_Minutes(void)			{return MinQualifyingTimeMinutes;}
@@ -353,7 +359,8 @@ class	cGameData :
 		WideStringClass	Owner;
 		DynamicVectorClass<WideStringClass> BottomText;
 		DynamicVectorClass<WideStringClass> OldBottomText;
-		StringClass			SettingsDescription;
+        // RM5248: changed type of SettingsDescription
+        WideStringClass			SettingsDescription;
 
 		int					MaxPlayers;
 		int					TimeLimitMinutes;
@@ -379,7 +386,8 @@ class	cGameData :
 		int					mWinnerID;
 		WinTypeEnum			WinType;
 
-		SYSTEMTIME			GameStartTime;
+        // RM5248: should change this to std::chrono
+        SYSTEMTIME			GameStartTime;
 		DWORD					GameStartTimeMs;
 		unsigned long		FrameCount;
 		WideStringClass	MvpName;
